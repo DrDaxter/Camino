@@ -4,7 +4,8 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper'
 import { MapComponent } from '../components/MapComponent'
-import { Coords, CurrentLocation } from '../interfaces/LocationsInterface'
+import { Coords } from '../interfaces/LocationsInterface'
+import { Colors } from '../theme/Colors'
 
 export const HomeScreen = () => {
   const [currentLc, setCurrentLc] = useState<Coords>()
@@ -27,12 +28,14 @@ useEffect(() => {
         currentLc?.longitude
         ? (
           <MapComponent 
-            lng={currentLc?.longitude}
-            lt={currentLc?.latitude}
+            lng={currentLc.longitude}
+            lt={currentLc.latitude}
           />
         )
         :(
-          <ActivityIndicator color={'red'} size={100}/>
+          <View style={styles.loaderContent}>
+            <ActivityIndicator color={Colors.primary} size={100}/>
+          </View>
         )
       }
     </View>
@@ -41,10 +44,12 @@ useEffect(() => {
 
 const styles = StyleSheet.create({
   content:{
-    flex:1
+    flex:1,
   },
-  text:{
-      color:'#000',
-      fontSize:20
+  
+  loaderContent:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
   }
 })
