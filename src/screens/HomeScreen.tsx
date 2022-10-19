@@ -1,7 +1,8 @@
 import Geolocation from '@react-native-community/geolocation'
-import React, { useCallback, useEffect, useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper'
+import Icon from 'react-native-vector-icons/Ionicons'
 import { ExampleLocations } from '../api/DataExample'
 import { MapComponent } from '../components/MapComponent'
 import { calculateDistance } from '../hooks/CalculateDistance'
@@ -9,6 +10,7 @@ import { Coords } from '../interfaces/LocationsInterface'
 import { Colors } from '../theme/Colors'
 
 export const HomeScreen = () => {
+  const screenWidth = Dimensions.get('screen').width
   const [currentLc, setCurrentLc] = useState<Coords>()
   const exampleLocations = ExampleLocations()
   
@@ -46,22 +48,15 @@ export const HomeScreen = () => {
       {
         currentLc?.longitude
         ? (
-          <View>
+          <View style={styles.mapContent}>
             <MapComponent 
               lng={currentLc.longitude}
               lt={currentLc.latitude}
             />
 
-            <TouchableOpacity style={{
-                position:'absolute',
-                backgroundColor:'yellow',
-                width:100,
-                height:100
-              }}
-              onPress={() => getFinalTrial()}
-            >
-              <Text>Calcular distancia</Text>
-            </TouchableOpacity>
+            <View style={{...styles.helOptionsContent, width:screenWidth}}>
+              <Text style={{color:'#000'}}>HOLA MUNDO</Text>
+            </View>
           </View>
         )
         :(
@@ -74,12 +69,20 @@ export const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   content:{
+    flex:1
+  },
+  mapContent:{
     flex:1,
   },
-  
   loaderContent:{
     flex:1,
     justifyContent:'center',
     alignItems:'center',
-  }
+  },
+  helOptionsContent:{
+    position:'absolute',
+    backgroundColor:'#fafafa',
+    bottom:0,
+    
+  },
 })
