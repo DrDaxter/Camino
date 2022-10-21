@@ -1,9 +1,10 @@
 import Geolocation from '@react-native-community/geolocation'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef,useMemo,useCallback } from 'react'
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ExampleLocations } from '../api/DataExample'
+import { HomeButtonsContent } from '../components/HomeButtonsContent'
 import { MapComponent } from '../components/MapComponent'
 import { SimpleButtonIconText } from '../components/SimpleButtonIconText'
 import { calculateDistance } from '../hooks/CalculateDistance'
@@ -11,11 +12,12 @@ import { Coords } from '../interfaces/LocationsInterface'
 import { Colors } from '../theme/Colors'
 import { constStyles } from '../theme/Const'
 
+
 export const HomeScreen = () => {
   const screenWidth = Dimensions.get('screen').width
   const [currentLc, setCurrentLc] = useState<Coords>()
   const exampleLocations = ExampleLocations()
-  
+
   const getLocation = async () => {
     await Geolocation.getCurrentPosition(({coords})=> {
       setCurrentLc(coords)
@@ -56,7 +58,8 @@ export const HomeScreen = () => {
               lt={currentLc.latitude}
             />
 
-            <View style={{...styles.helOptionsContent, width:screenWidth}}>
+            <HomeButtonsContent />
+            {/* <View style={{...styles.helOptionsContent, width:screenWidth}}>
               <View style={styles.buttonsContainer}>
                 <SimpleButtonIconText 
                   text={"Servicio \nmecánico"}
@@ -71,7 +74,7 @@ export const HomeScreen = () => {
                   iconName="car-outline"
                 />
               </View>
-            </View>
+            </View> */}
           </View>
         )
         :(
@@ -101,10 +104,6 @@ const styles = StyleSheet.create({
     height:170,
     borderTopLeftRadius:40,
     borderTopRightRadius:40,
-    justifyContent:'center'
-  },
-  buttonsContainer:{
-    flexDirection:'row',
     justifyContent:'center'
   },
  

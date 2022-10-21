@@ -5,12 +5,13 @@ import { constStyles } from '../theme/Const'
 
 interface Props{
     text:string,
-    iconName:string
+    iconName:string,
+    action?: ()=>void
 }
 
-export const SimpleButtonIconText = ({text,iconName}:Props) => {
+export const SimpleButtonIconText = ({text,iconName,action}:Props) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={action}>
         <View style={styles.buttonContent}>
         <Icon 
             name={iconName}
@@ -27,7 +28,6 @@ export const SimpleButtonIconText = ({text,iconName}:Props) => {
 
 const styles = StyleSheet.create({
     buttonContent:{
-        marginHorizontal:20,
         alignItems:'center'
     }
 })
