@@ -5,9 +5,11 @@ import { ActivityIndicator } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ExampleLocations } from '../api/DataExample'
 import { MapComponent } from '../components/MapComponent'
+import { SimpleButtonIconText } from '../components/SimpleButtonIconText'
 import { calculateDistance } from '../hooks/CalculateDistance'
 import { Coords } from '../interfaces/LocationsInterface'
 import { Colors } from '../theme/Colors'
+import { constStyles } from '../theme/Const'
 
 export const HomeScreen = () => {
   const screenWidth = Dimensions.get('screen').width
@@ -55,7 +57,20 @@ export const HomeScreen = () => {
             />
 
             <View style={{...styles.helOptionsContent, width:screenWidth}}>
-              <Text style={{color:'#000'}}>HOLA MUNDO</Text>
+              <View style={styles.buttonsContainer}>
+                <SimpleButtonIconText 
+                  text={"Servicio \nmecánico"}
+                  iconName="briefcase-outline"
+                />
+                <SimpleButtonIconText 
+                  text={"Cambio de \nllantas"}
+                  iconName="build-outline"
+                />
+                <SimpleButtonIconText 
+                  text={"Servicio de \ngrua"}
+                  iconName="car-outline"
+                />
+              </View>
             </View>
           </View>
         )
@@ -83,6 +98,14 @@ const styles = StyleSheet.create({
     position:'absolute',
     backgroundColor:'#fafafa',
     bottom:0,
-    
+    height:170,
+    borderTopLeftRadius:40,
+    borderTopRightRadius:40,
+    justifyContent:'center'
   },
+  buttonsContainer:{
+    flexDirection:'row',
+    justifyContent:'center'
+  },
+ 
 })
