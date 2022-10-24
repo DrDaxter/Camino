@@ -57,24 +57,9 @@ export const HomeScreen = () => {
               lng={currentLc.longitude}
               lt={currentLc.latitude}
             />
-
-            <HomeButtonsContent />
-            {/* <View style={{...styles.helOptionsContent, width:screenWidth}}>
-              <View style={styles.buttonsContainer}>
-                <SimpleButtonIconText 
-                  text={"Servicio \nmecánico"}
-                  iconName="briefcase-outline"
-                />
-                <SimpleButtonIconText 
-                  text={"Cambio de \nllantas"}
-                  iconName="build-outline"
-                />
-                <SimpleButtonIconText 
-                  text={"Servicio de \ngrua"}
-                  iconName="car-outline"
-                />
-              </View>
-            </View> */}
+            <View style={styles.contentButtomOption}>
+              <HomeButtonsContent />
+            </View>
           </View>
         )
         :(
@@ -97,14 +82,9 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
   },
-  helOptionsContent:{
+  contentButtomOption:{
     position:'absolute',
-    backgroundColor:'#fafafa',
     bottom:0,
-    height:170,
-    borderTopLeftRadius:40,
-    borderTopRightRadius:40,
-    justifyContent:'center'
-  },
+  }
  
 })
