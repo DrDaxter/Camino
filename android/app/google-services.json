@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "227363245977",
+    "project_id": "camino-487b5",
+    "storage_bucket": "camino-487b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227363245977:android:82f042d47dc41dbcff0d08",
+        "android_client_info": {
+          "package_name": "com.camino"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "227363245977-6e45icfkekk2n1q49oumh0491lal1klg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.camino",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "227363245977-4ro255dani9lq7rsca5mq84i3g9nc4n7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdX3rcsAkjOdifk88owQmmrwqS1XDT1Bw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "227363245977-4ro255dani9lq7rsca5mq84i3g9nc4n7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

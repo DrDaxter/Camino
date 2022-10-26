@@ -1,22 +1,17 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { Button, StyleSheet, Text, View,Dimensions } from 'react-native';
+import React from 'react'
+import { StyleSheet, View,Dimensions } from 'react-native';
 import { SimpleButtonIconText } from './SimpleButtonIconText';
 import {PanGestureHandler,GestureHandlerRootView} from 'react-native-gesture-handler';
-import Animated, { call, runOnJS, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 export const HomeButtonsContent = () => {
   const screenWidth = Dimensions.get('screen').width
   const screenHeight = Dimensions.get('screen').height
-  const [iconName, setIconName] = useState("caret-down-outline")
   const startingPosition = 10;
-  const pressed = useSharedValue(false);
   const y = useSharedValue(startingPosition);
-  const isDown = useSharedValue("NO")
 
   const eventHandler = useAnimatedGestureHandler({
     onStart: (event, ctx) => {
-      pressed.value = true;
     },
     onActive: (event, ctx) => {
       if(event.translationY >= 0){
@@ -25,20 +20,13 @@ export const HomeButtonsContent = () => {
       console.log(y.value)
     },
     onEnd: (event, ctx) => {
-      runOnJS(ejemplo)()
       if(y.value < (screenHeight/3) && y.value > 1){
         y.value = (screenWidth /3)
-        isDown.value = "SI"
       }else if(y.value > 1 && y.value >= 0){
         y.value = withSpring(startingPosition)
-        isDown.value = "NO"
       }
     },
   });
-  
-  const ejemplo = () => {
-    console.log("HOLAAA")
-  }
 
   const uas = useAnimatedStyle(() => {
     return {
@@ -55,12 +43,7 @@ export const HomeButtonsContent = () => {
       <PanGestureHandler onGestureEvent={eventHandler}>
         <Animated.View style={[{...styles.helOptionsContent,width:screenWidth},uas]} >
           <View style={styles.topElementsContent}>
-           {/*  <Icon 
-              name={iconName}
-              color="#000"
-              size={20}
-            /> */}
-            <Text style={{color:"#000"}}>{iconName}</Text>
+            <View style={styles.iconBottonSheet}></View>
           </View>
           <View style={styles.buttonsContainer}>
             <SimpleButtonIconText 
@@ -85,6 +68,12 @@ export const HomeButtonsContent = () => {
 const styles = StyleSheet.create({
   topElementsContent:{
     alignItems:'center'
+  },
+  iconBottonSheet:{
+    width:50,
+    height:2,
+    backgroundColor:'#000',
+    opacity:0.6
   },
   helOptionsContent:{
     position:'absolute',

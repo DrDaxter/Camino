@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@react-native-community/geolocation": "^3.0.2",
+    "@react-native-firebase/app": "^16.3.0",
+    "@react-native-firebase/firestore": "^16.3.0",
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/material-bottom-tabs": "^6.2.4",
     "@react-navigation/native": "^6.0.13",
