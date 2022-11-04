@@ -1,39 +1,37 @@
-import React from 'react'
+import React, { useCallback, useContext, useEffect } from 'react'
 import { StyleSheet, View,Dimensions } from 'react-native';
 import { SimpleButtonIconText } from './SimpleButtonIconText';
 import {PanGestureHandler,GestureHandlerRootView} from 'react-native-gesture-handler';
-import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
+import { AnimationHook } from '../hooks/AnimationHook';
+import { ContextServicio } from '../context/ServiciosContext';
+import {firebase} from '../hooks/firebase/firebase'
+import { CalculateNearServices } from '../hooks/CalculateNearServices';
+import { useFocusEffect } from '@react-navigation/native';
 
-export const HomeButtonsContent = () => {
+interface Props{
+  userLat:number,
+  userLong:number
+}
+
+export const HomeButtonsContent = ({
+  userLat,
+  userLong
+}:Props) => {
+  const startingPosition = 10;
   const screenWidth = Dimensions.get('screen').width
   const screenHeight = Dimensions.get('screen').height
-  const startingPosition = 10;
-  const y = useSharedValue(startingPosition);
+  const {llenarServicios} = useContext(ContextServicio)
+  const {eventHandler,uas} = AnimationHook(screenHeight,startingPosition)
+  const {servicios} = firebase()
+  const {calculateNearSerices} = CalculateNearServices()
 
-  const eventHandler = useAnimatedGestureHandler({
-    onStart: (event, ctx) => {
-    },
-    onActive: (event, ctx) => {
-      if(event.translationY >= 0){
-        y.value = event.translationY;
-      }
-      console.log(y.value)
-    },
-    onEnd: (event, ctx) => {
-      if(y.value < (screenHeight/3) && y.value > 1){
-        y.value = (screenWidth /3)
-      }else if(y.value > 1 && y.value >= 0){
-        y.value = withSpring(startingPosition)
-      }
-    },
-  });
-
-  const uas = useAnimatedStyle(() => {
-    return {
-      backgroundColor:'#fafafa',
-      transform: [{ translateY: y.value }],
-    };
-  });
+  const getServicios = () =>{
+    const result = calculateNearSerices(servicios, userLat, userLong)
+    if(result){
+      llenarServicios(result)
+    }
+  }
 
   return (
     <GestureHandlerRootView style={{
@@ -49,7 +47,9 @@ export const HomeButtonsContent = () => {
             <SimpleButtonIconText 
               text={"Servicio \nmecánico"}
               iconName="briefcase-outline"
+              action={getServicios}
             />
+              
             <SimpleButtonIconText 
               text={"Cambio de \nllantas"}
               iconName="build-outline"

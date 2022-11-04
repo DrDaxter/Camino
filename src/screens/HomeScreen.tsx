@@ -1,6 +1,6 @@
 import Geolocation from '@react-native-community/geolocation'
 import React, { useEffect, useState, useRef,useMemo,useCallback } from 'react'
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ExampleLocations } from '../api/DataExample'
@@ -8,36 +8,24 @@ import { HomeButtonsContent } from '../components/HomeButtonsContent'
 import { MapComponent } from '../components/MapComponent'
 import { SimpleButtonIconText } from '../components/SimpleButtonIconText'
 import { calculateDistance } from '../hooks/CalculateDistance'
+import { firebase } from '../hooks/firebase/firebase'
 import { Coords } from '../interfaces/LocationsInterface'
 import { Colors } from '../theme/Colors'
 import { constStyles } from '../theme/Const'
 
 
 export const HomeScreen = () => {
-  const screenWidth = Dimensions.get('screen').width
   const [currentLc, setCurrentLc] = useState<Coords>()
-  const exampleLocations = ExampleLocations()
+  useEffect(() => {
+    getLocation()
+  }, [])
 
   const getLocation = async () => {
     await Geolocation.getCurrentPosition(({coords})=> {
       setCurrentLc(coords)
     })
   }
-
-  const getFinalTrial = () => {
-    const meters = calculateDistance(
-      currentLc?.latitude!,
-      currentLc?.longitude!,
-      exampleLocations[0].latitude,
-      exampleLocations[0].longitude
-    )
-
-    console.log("METROS DE DISTANCIA",meters)
-  }
-
-  useEffect(() => {
-    getLocation()
-  }, [])
+  
 
   const renderLoader = () => {
     return(
@@ -58,7 +46,10 @@ export const HomeScreen = () => {
               lt={currentLc.latitude}
             />
             <View style={styles.contentButtomOption}>
-              <HomeButtonsContent />
+              <HomeButtonsContent 
+                userLat={currentLc.latitude}
+                userLong={currentLc.longitude}
+              />
             </View>
           </View>
         )

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import firestore from '@react-native-firebase/firestore';
+import { Servicios } from '../../interfaces/ServiciosInterface';
 
 export const firebase = () => {
-    const [servicios, setServicios] = useState<any>()
+    const [servicios, setServicios] = useState<Servicios[]>([])
+
   const getServicios = async()=>{
-    const servicios = await firestore().collection('servicios').get()
-    servicios.forEach(item => {
-      console.log(item.data())
+    const fireServicios = await firestore().collection('servicios').get()
+    fireServicios.forEach(item => {
+      setServicios(current => [...current,item.data() as Servicios])
     }) 
   }
 
@@ -15,5 +17,7 @@ export const firebase = () => {
   }, [])
   
 
- 
+ return{
+  servicios
+ }
 }
