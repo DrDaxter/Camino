@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useContext, useCallback, useState,useEffect } from 'react'
-import { Dimensions, Text, View } from 'react-native';
+import { Dimensions, Image, Text, View } from 'react-native';
 import MapView ,{ PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import { ContextServicio } from '../context/ServiciosContext';
 //import { StateServi } from '../context/ServiciosContext';
@@ -14,19 +14,16 @@ export const MapComponent = ({
   lng ,
   lt 
 }:Props) => {
-  const {servicioState} = useContext(ContextServicio)
-  const [nearServices, setNearServices] = useState<Servicios[]>()
+  const {servicioState,mainUtils,changeMainUtils} = useContext(ContextServicio)
+  const [tracksViewChanges, setTracksViewChanges] = useState(true)
 
-  
-useFocusEffect(
-  useCallback(() => {
-    console.log(servicioState.length)
-    /* const obj = servicioState.servicios as {}
-    const newArr:Servicios[] = Object.values(obj)
-    setNearServices(newArr) */
-      
-  }, [servicioState])
-)
+  useEffect(()=>{
+    console.log("CAMBIO servicioState")
+    if(mainUtils.isPinLoading){
+      changeMainUtils(false)
+      console.log("SE CAMBIO EL LOADING DE PINS")
+    }
+  },[servicioState])
   
 return (
     <View style={{flex:1}}>
@@ -48,8 +45,20 @@ return (
                   key={index}
                   coordinate={{latitude:item.latitude, longitude:item.longitude}}
                   title={item.nombre}
-                  description={item.nombre}
-                />
+                  tracksViewChanges={tracksViewChanges}
+                >
+                  <Image
+                    onLoad={()=> setTracksViewChanges(false)}
+                    style={{ 
+                      width: 50,
+                      height: 50
+                    }}
+                    source={{
+                      uri: item.imageUrl ?? '',
+                    }}
+                    fadeDuration={0}
+                  />
+                </Marker>
               ))
           }
       </MapView>

@@ -1,29 +1,35 @@
 import Geolocation from '@react-native-community/geolocation'
-import React, { useEffect, useState, useRef,useMemo,useCallback } from 'react'
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState,useContext,useCallback } from 'react'
+import { Button, StyleSheet, View } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper'
-import Icon from 'react-native-vector-icons/Ionicons'
-import { ExampleLocations } from '../api/DataExample'
 import { HomeButtonsContent } from '../components/HomeButtonsContent'
 import { MapComponent } from '../components/MapComponent'
-import { SimpleButtonIconText } from '../components/SimpleButtonIconText'
-import { calculateDistance } from '../hooks/CalculateDistance'
-import { firebase } from '../hooks/firebase/firebase'
+import { SimpleAlert } from '../components/utils/SimpleAlert'
+import { ContextServicio } from '../context/ServiciosContext'
 import { Coords } from '../interfaces/LocationsInterface'
 import { Colors } from '../theme/Colors'
-import { constStyles } from '../theme/Const'
 
 
 export const HomeScreen = () => {
+  const {mainUtils} = useContext(ContextServicio)
   const [currentLc, setCurrentLc] = useState<Coords>()
-  useEffect(() => {
-    getLocation()
-  }, [])
+  const simpleAlert = SimpleAlert()
+
+  useEffect(
+    useCallback(()=>{
+      getLocation()
+    },[])
+  )
 
   const getLocation = async () => {
-    await Geolocation.getCurrentPosition(({coords})=> {
-      setCurrentLc(coords)
-    })
+    await Geolocation.getCurrentPosition(
+      ({coords})=> {
+        setCurrentLc(coords)
+      },
+      (Error?) =>{
+        simpleAlert("Error de carga",`Ha habido un problema al cargar tu dirección (${Error?.code})`)
+      }
+    )
   }
   
 
@@ -37,6 +43,18 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.content}>
+      {
+        mainUtils.isPinLoading && (
+          <ActivityIndicator
+            style={{
+              position:'absolute',
+              zIndex:1,
+              right:'40%'
+            }} 
+            color={Colors.primary} size={80}
+          />
+        )
+      }
       {
         currentLc?.longitude
         ? (

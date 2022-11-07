@@ -1,6 +1,4 @@
-import { CalculateNearServices } from "../hooks/CalculateNearServices";
 import { Servicios } from "../interfaces/ServiciosInterface";
-//import { StateServi } from "./ServiciosContext";
 
 type Actions = 
 | {type: 'fillServices', payload: Servicios[]}

@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext } from 'react'
 import firestore from '@react-native-firebase/firestore';
 import { Servicios } from '../../interfaces/ServiciosInterface';
+import { ContextServicio } from '../../context/ServiciosContext';
 
 export const firebase = () => {
-    const [servicios, setServicios] = useState<Servicios[]>([])
+  const {changeMainUtils} = useContext(ContextServicio)
 
-  const getServicios = async()=>{
+  const getFireServicios = async()=>{
+    changeMainUtils(true)
+    let servicesArr:Servicios[] = []
     const fireServicios = await firestore().collection('servicios').get()
     fireServicios.forEach(item => {
-      setServicios(current => [...current,item.data() as Servicios])
-    }) 
+      servicesArr.push({...item.data() as Servicios})
+    })
+    return servicesArr
   }
-
-  useEffect(() => {
-    getServicios()
-  }, [])
   
 
  return{
-  servicios
+  getFireServicios
  }
 }

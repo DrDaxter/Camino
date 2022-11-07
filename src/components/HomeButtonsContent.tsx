@@ -8,6 +8,7 @@ import { ContextServicio } from '../context/ServiciosContext';
 import {firebase} from '../hooks/firebase/firebase'
 import { CalculateNearServices } from '../hooks/CalculateNearServices';
 import { useFocusEffect } from '@react-navigation/native';
+import { Servicios } from '../interfaces/ServiciosInterface';
 
 interface Props{
   userLat:number,
@@ -23,13 +24,15 @@ export const HomeButtonsContent = ({
   const screenHeight = Dimensions.get('screen').height
   const {llenarServicios} = useContext(ContextServicio)
   const {eventHandler,uas} = AnimationHook(screenHeight,startingPosition)
-  const {servicios} = firebase()
+  const {getFireServicios} = firebase()
   const {calculateNearSerices} = CalculateNearServices()
 
-  const getServicios = () =>{
-    const result = calculateNearSerices(servicios, userLat, userLong)
-    if(result){
-      llenarServicios(result)
+  const getServicios = async () =>{
+    const fireServi:Servicios[] = await getFireServicios()
+    if(fireServi){
+      const result = calculateNearSerices(fireServi, userLat, userLong)
+      console.log(result)
+      llenarServicios(result ? result : [])
     }
   }
 

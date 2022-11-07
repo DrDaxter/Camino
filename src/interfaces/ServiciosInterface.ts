@@ -3,4 +3,5 @@ export interface Servicios{
     latitude: number;
     longitude: number;
     nombre: string;
+    imageUrl:string;
 }
