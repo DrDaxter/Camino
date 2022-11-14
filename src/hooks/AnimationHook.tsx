@@ -1,29 +1,44 @@
-import React from 'react'
+import React ,{useEffect,useCallback} from 'react'
+import { Gesture } from 'react-native-gesture-handler';
 import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 export const AnimationHook = (
     screenHeight:number,
     startingPosition:number
 ) => {
-    const y = useSharedValue(startingPosition);
+    const y = useSharedValue(0);
+    const context = useSharedValue({y: y.value})
+    const MAX_TOP_Y = -screenHeight + (screenHeight/1.3)
 
-    const eventHandler = useAnimatedGestureHandler({
-        onStart: (event, ctx) => {
-        },
-        onActive: (event, ctx) => {
-          if(event.translationY >= 0){
-            y.value = event.translationY;
-          }
-        },
-        onEnd: (event, ctx) => {
-          console.log(screenHeight/7)
-          if(y.value < (screenHeight/7) && y.value > 1){
-            y.value = (screenHeight /7)
-          }else if(y.value > 1 && y.value >= 0){
-            y.value = withSpring(startingPosition)
-          }
-        },
+    const doScrollTo = useCallback((toValue:number)=>{
+      'worklet'
+      y.value = withSpring(toValue, {damping:50})
+    },[]) 
+
+    const gesture = Gesture.Pan()
+      .onStart(() => {
+        context.value = {y: y.value}
+      })
+      .onUpdate((event) => {
+        y.value = event.translationY + context.value.y
+        y.value = Math.max(y.value,MAX_TOP_Y)
+        console.log(y.value)
+      })
+      .onEnd(() => {
+        console.log("TO UP",-screenHeight / 7)
+       
+        if(y.value > -screenHeight/7){
+          console.log("DOWN")
+          doScrollTo(-screenHeight/10)
+        }else if(y.value < -screenHeight/9){
+          doScrollTo(MAX_TOP_Y)
+        }
     });
+
+    useEffect(() => {
+      doScrollTo(-screenHeight / 4)
+    }, [])
+    
 
     const uas = useAnimatedStyle(() => {
         return {
@@ -33,7 +48,7 @@ export const AnimationHook = (
     });
 
     return{
-        eventHandler,
+        gesture,
         uas
     }
 }

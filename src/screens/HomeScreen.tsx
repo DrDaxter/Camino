@@ -1,6 +1,7 @@
 import Geolocation from '@react-native-community/geolocation'
 import React, { useEffect, useState,useContext,useCallback } from 'react'
 import { Button, StyleSheet, View } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ActivityIndicator } from 'react-native-paper'
 import { HomeButtonsContent } from '../components/HomeButtonsContent'
 import { MapComponent } from '../components/MapComponent'
@@ -42,7 +43,7 @@ export const HomeScreen = () => {
   }
 
   return (
-    <View style={styles.content}>
+    <GestureHandlerRootView style={styles.content}>
       {
         mainUtils.isPinLoading && (
           <ActivityIndicator
@@ -63,19 +64,17 @@ export const HomeScreen = () => {
               lng={currentLc.longitude}
               lt={currentLc.latitude}
             />
-            <View style={styles.contentButtomOption}>
-              <HomeButtonsContent 
+            <HomeButtonsContent 
                 userLat={currentLc.latitude}
                 userLong={currentLc.longitude}
               />
-            </View>
           </View>
         )
         :(
          renderLoader()
         )
       }
-    </View>
+    </GestureHandlerRootView>
   )
 }
 

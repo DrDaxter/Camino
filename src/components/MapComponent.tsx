@@ -18,10 +18,8 @@ export const MapComponent = ({
   const [tracksViewChanges, setTracksViewChanges] = useState(true)
 
   useEffect(()=>{
-    console.log("CAMBIO servicioState")
     if(mainUtils.isPinLoading){
       changeMainUtils(false)
-      console.log("SE CAMBIO EL LOADING DE PINS")
     }
   },[servicioState])
   

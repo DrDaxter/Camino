@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect } from 'react'
 import { StyleSheet, View,Dimensions } from 'react-native';
 import { SimpleButtonIconText } from './SimpleButtonIconText';
-import {PanGestureHandler,GestureHandlerRootView} from 'react-native-gesture-handler';
+import {PanGestureHandler,GestureHandlerRootView, GestureDetector} from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { AnimationHook } from '../hooks/AnimationHook';
 import { ContextServicio } from '../context/ServiciosContext';
@@ -15,15 +15,18 @@ interface Props{
   userLong:number
 }
 
+const screenWidth = Dimensions.get('screen').width
+const screenHeight = Dimensions.get('screen').height
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+
+
 export const HomeButtonsContent = ({
   userLat,
   userLong
 }:Props) => {
   const startingPosition = 10;
-  const screenWidth = Dimensions.get('screen').width
-  const screenHeight = Dimensions.get('screen').height
   const {llenarServicios} = useContext(ContextServicio)
-  const {eventHandler,uas} = AnimationHook(screenHeight,startingPosition)
+  const {gesture,uas} = AnimationHook(screenHeight,startingPosition)
   const {getFireServicios} = firebase()
   const {calculateNearSerices} = CalculateNearServices()
 
@@ -37,11 +40,8 @@ export const HomeButtonsContent = ({
   }
 
   return (
-    <GestureHandlerRootView style={{
-      height:screenHeight / 5,
-      width:screenWidth,
-    }}>
-      <PanGestureHandler onGestureEvent={eventHandler}>
+    
+      <GestureDetector gesture={gesture}>
         <Animated.View style={[{...styles.helOptionsContent,width:screenWidth},uas]} >
           <View style={styles.topElementsContent}>
             <View style={styles.iconBottonSheet}></View>
@@ -63,28 +63,30 @@ export const HomeButtonsContent = ({
             />
           </View>
         </Animated.View>
-      </PanGestureHandler>
-    </GestureHandlerRootView>
+      </GestureDetector>
+   
   )
 }
 
 const styles = StyleSheet.create({
   topElementsContent:{
+    marginVertical:10,
     alignItems:'center'
   },
   iconBottonSheet:{
-    width:50,
+    width:60,
     height:2,
     backgroundColor:'#000',
-    opacity:0.6
+    opacity:0.6,
+    borderRadius:10
   },
   helOptionsContent:{
-    position:'absolute',
-    bottom:0,
-    height:170,
-    borderTopLeftRadius:40,
-    borderTopRightRadius:40,
-    justifyContent:'center'
+    height: SCREEN_HEIGHT,
+    width: '100%',
+    backgroundColor: 'white',
+    position: 'absolute',
+    top: SCREEN_HEIGHT,
+    borderRadius: 25,
   },
   buttonsContainer:{
       marginVertical:30,
