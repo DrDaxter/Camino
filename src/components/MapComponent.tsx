@@ -1,27 +1,48 @@
-import { useFocusEffect } from '@react-navigation/native';
-import React, { useContext, useCallback, useState,useEffect } from 'react'
+import React, { useContext, useCallback, useState,useEffect, useReducer } from 'react'
 import { Dimensions, Image, Text, View } from 'react-native';
 import MapView ,{ PROVIDER_GOOGLE, Marker } from "react-native-maps";
+//import { ActionsD, DetailsReducer } from '../context/DetailsReducer';
 import { ContextServicio } from '../context/ServiciosContext';
-//import { StateServi } from '../context/ServiciosContext';
-import { Servicios } from '../interfaces/ServiciosInterface';
+import { DetailInterface } from '../interfaces/ImportantInterface';
+import { ServiceDetails } from './ServiceDetails';
 
 interface Props{
   lng:number
   lt:number
 }
+export const DetailInitialState:DetailInterface = {
+  showDetail:false,
+  image:"",
+  name:"",
+  description:""
+}
+
 export const MapComponent = ({
   lng ,
   lt 
 }:Props) => {
-  const {servicioState,mainUtils,changeMainUtils} = useContext(ContextServicio)
+  const [details, setDetails] = useState<DetailInterface>(DetailInitialState)
   const [tracksViewChanges, setTracksViewChanges] = useState(true)
+  
+
+  const {servicioState,mainUtils,changeMainUtils} = useContext(ContextServicio)
 
   useEffect(()=>{
     if(mainUtils.isPinLoading){
       changeMainUtils(false)
     }
   },[servicioState])
+
+  const fillDetailState = (showDetail:boolean, image:string, name:string, description:string) =>
+  {
+    setDetails({
+      showDetail,
+      image,
+      name,
+      description
+    })
+  }
+
   
 return (
     <View style={{flex:1}}>
@@ -44,6 +65,12 @@ return (
                   coordinate={{latitude:item.latitude, longitude:item.longitude}}
                   title={item.nombre}
                   tracksViewChanges={tracksViewChanges}
+                  onPress={()=>fillDetailState(
+                    true,
+                    item.imageUrl,
+                    item.nombre,
+                    "")
+                  }
                 >
                   <Image
                     onLoad={()=> setTracksViewChanges(false)}
@@ -60,6 +87,15 @@ return (
               ))
           }
       </MapView>
+      {
+        details.showDetail && (
+          <ServiceDetails 
+            image={details?.image!}
+            name={details?.name!}
+            description={details?.description!}
+          />
+        )
+      }
     </View>
   )
 }
