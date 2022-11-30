@@ -1,30 +1,40 @@
 import React from 'react'
-import { StyleSheet, Text, View, Dimensions } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { StyleSheet, Text, View, Dimensions,TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 interface Props{
     iconName:string,
-    title:string
+    title:string,
+    onPress:()=>void
 }
 const screenWidth = Dimensions.get('screen').width
 
-export const UserListData = ({iconName,title}:Props) => {
+export const UserListData = ({
+    iconName,
+    title,
+    onPress
+}:Props) => {
   return (
     <TouchableOpacity 
         style={styles.mainContent}
-        onPress={()=>console.log("click")}
+        onPress={onPress}
     >
+        
+        <View>
             <Icon 
                 name={iconName}
-                size={20}
+                size={25}
                 color="#000"
                 
             />
-            
+        </View>
+        <View
+            style={{left:20}}
+        >
             <Text style={styles.title}>
                 {title}
             </Text>
+        </View>
        
     </TouchableOpacity>
   )
@@ -32,16 +42,20 @@ export const UserListData = ({iconName,title}:Props) => {
 
 const styles = StyleSheet.create({
     mainContent:{
-        backgroundColor:'yellow',
+        justifyContent:'flex-start',
         flexDirection:'row',
-        justifyContent:'space-around',
         alignItems:'center',
         width:screenWidth,
         height:60,
-        paddingHorizontal:20
+        paddingHorizontal:20,
+        marginVertical:15
+    },
+    itemContent:{
+        flexDirection:'row',
+        width:'60%',
     },
     title:{
         fontSize:20,
-        color:"#000"
+        color:"#000",
     }
 })

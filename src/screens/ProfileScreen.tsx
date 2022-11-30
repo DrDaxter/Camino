@@ -12,8 +12,13 @@ export const ProfileScreen = () => {
       <UserListData 
         iconName={item.icon} 
         title={item.title} 
+        onPress={FlatPressHandler}
       />
     )
+  }
+
+  const FlatPressHandler = () => {
+    console.log("CLICK AQUI")
   }
   
   return (
@@ -42,14 +47,12 @@ export const ProfileScreen = () => {
 const styles = StyleSheet.create({
   mainContent:{
     flex:1,
-    backgroundColor:'cyan'
   },
   useInformationContent:{
     flexDirection:'row'
   },
   itemsContent:{
     flex:1,
-    backgroundColor:"red",
     alignItems:'center',
   },
   strongText:{
