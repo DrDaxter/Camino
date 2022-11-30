@@ -93,6 +93,7 @@ return (
             image={details?.image!}
             name={details?.name!}
             description={details?.description!}
+            closeDetail={fillDetailState}
           />
         )
       }

@@ -6,12 +6,16 @@ const screenWidth = Dimensions.get('screen').width
 interface Props{
     image:string,
     name:string,
-    description:string
+    description:string,
+    closeDetail: (
+        showDetail:boolean, image:string, name:string, description:string
+    )=>void
 }
 export const ServiceDetails = ({
     image,
     name,
-    description
+    description,
+    closeDetail
 }:Props) => {
   return (
     <View style={styles.mainContent}>
@@ -30,6 +34,7 @@ export const ServiceDetails = ({
         </View>
         <TouchableOpacity
             style={styles.closeDetailBtn}
+            onPress={()=> closeDetail(false,"","","")}
         >
             <Icon 
                 name='close'
@@ -56,7 +61,7 @@ const styles = StyleSheet.create({
         paddingHorizontal:5,
         borderTopRightRadius:10,
         borderBottomRightRadius:10,
-        marginRight:10,
+        marginHorizontal:5,
         bottom:0
     },
     textContent:{
