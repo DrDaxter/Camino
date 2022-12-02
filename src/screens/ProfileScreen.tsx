@@ -26,7 +26,7 @@ export const ProfileScreen = () => {
       <View style={styles.useInformationContent}>
         <Image 
           source={{uri:"https://i.pinimg.com/736x/89/90/48/899048ab0cc455154006fdb9676964b3.jpg"}}
-          style={{width:30,height:30}}
+          style={styles.userPhoto}
         />
         <View style={{justifyContent:'flex-end'}}>
           <Text style={styles.strongText}>Bienvenido</Text>
@@ -49,7 +49,16 @@ const styles = StyleSheet.create({
     flex:1,
   },
   useInformationContent:{
-    flexDirection:'row'
+    flexDirection:'row',
+    marginTop:15,
+    marginBottom:25,
+    paddingHorizontal:20
+  },
+  userPhoto:{
+    width:60,
+    height:60,
+    marginRight:10,
+    borderRadius:50
   },
   itemsContent:{
     flex:1,

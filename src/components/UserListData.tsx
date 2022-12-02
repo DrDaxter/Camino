@@ -19,7 +19,6 @@ export const UserListData = ({
         style={styles.mainContent}
         onPress={onPress}
     >
-        
         <View>
             <Icon 
                 name={iconName}

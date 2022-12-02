@@ -9,6 +9,7 @@ import { SimpleAlert } from '../utils/SimpleAlert'
 import { ContextServicio } from '../context/ServiciosContext'
 import { Coords } from '../interfaces/LocationsInterface'
 import { Colors } from '../theme/Colors'
+import { EjemploButtomSheet } from '../components/EjemploButtomSheet'
 
 
 export const HomeScreen = () => {
@@ -64,6 +65,7 @@ export const HomeScreen = () => {
               lng={currentLc.longitude}
               lt={currentLc.latitude}
             />
+            {/* <EjemploButtomSheet /> */}
             <HomeButtonsContent 
                 userLat={currentLc.latitude}
                 userLong={currentLc.longitude}

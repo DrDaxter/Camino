@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { Inventory } from '../screens/Inventory';
+import { UserStackNavigation } from './UserStackNavigation';
 
 const BottomTabAndroid = createMaterialBottomTabNavigator()
 
@@ -28,7 +29,7 @@ const AndroidTab = () => {
                         case 'HomeScreen':
                             iconName = 'earth'
                             break;
-                        case 'ProfileScreen':
+                        case 'UserStackNavigation':
                             iconName = 'person';
                             break;
                         case 'Inventory':
@@ -43,7 +44,7 @@ const AndroidTab = () => {
             })}
             initialRouteName='HomeScreen'
         >
-            <BottomTabAndroid.Screen  name='ProfileScreen' component={ProfileScreen}/>
+            <BottomTabAndroid.Screen  name='UserStackNavigation' component={UserStackNavigation}/>
             <BottomTabAndroid.Screen name='HomeScreen' component={HomeScreen}/>
             <BottomTabAndroid.Screen  name='Inventory' component={Inventory}/>
 
