@@ -1,10 +1,13 @@
+import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
 import { StyleSheet, Text, View, FlatList, Image } from 'react-native'
 import { UserListData } from '../components/UserListData'
 import { firebase } from '../hooks/firebase/firebase'
 import { Data, DataStructure } from '../utils/AccountItems'
 
-export const ProfileScreen = () => {
+interface Props extends StackScreenProps<any,any>{}
+
+export const ProfileScreen = ({navigation}:Props) => {
   const servicios = firebase()
 
   const RenderItem = (item:DataStructure) => {
@@ -12,13 +15,13 @@ export const ProfileScreen = () => {
       <UserListData 
         iconName={item.icon} 
         title={item.title} 
-        onPress={FlatPressHandler}
+        onPress={()=> FlatPressHandler(item.component)}
       />
     )
   }
 
-  const FlatPressHandler = () => {
-    console.log("CLICK AQUI")
+  const FlatPressHandler = (component:string) => {
+    navigation.navigate(component)
   }
   
   return (
