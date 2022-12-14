@@ -34,6 +34,13 @@ export const UserListData = ({
                 {title}
             </Text>
         </View>
+        <View style={styles.arrowIcon}>
+            <Icon 
+                name='chevron-forward-outline'
+                size={20}
+                color="gray"
+            />
+        </View>
        
     </TouchableOpacity>
   )
@@ -54,7 +61,13 @@ const styles = StyleSheet.create({
         width:'60%',
     },
     title:{
-        fontSize:20,
+        fontSize:15,
         color:"#000",
+        fontWeight:'400'
+    },
+    arrowIcon:{
+        position:"absolute",
+        right:0,
+        marginRight:15
     }
 })

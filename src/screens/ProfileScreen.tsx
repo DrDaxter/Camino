@@ -32,7 +32,10 @@ export const ProfileScreen = ({navigation}:Props) => {
           style={styles.userPhoto}
         />
         <View style={{justifyContent:'flex-end'}}>
-          <Text style={styles.strongText}>Bienvenido</Text>
+          <Text style={{
+            color:"#000",
+            opacity:0.5
+          }}>Bienvenido</Text>
           <Text style={styles.strongText}>Guillermo Ramirez</Text>
         </View>
       </View>
@@ -55,7 +58,12 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     marginTop:15,
     marginBottom:25,
-    paddingHorizontal:20
+    marginHorizontal:10,
+    paddingVertical:50,
+    borderTopColor:"gray",
+    borderBottomColor:"gray",
+    borderTopWidth:0.8,
+    borderBottomWidth:0.8
   },
   userPhoto:{
     width:60,

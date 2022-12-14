@@ -1,8 +1,11 @@
 import { createStackNavigator } from '@react-navigation/stack';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { UserComunidad } from '../screens/userAccount/UserComunidad';
 import { UserPoliticas } from '../screens/userAccount/UserPoliticas';
 import { UserRutas } from '../screens/userAccount/UserRutas';
+import Icon from 'react-native-vector-icons/Ionicons'
+import { HeaderContentComponent } from '../components/HeaderContentComponent';
 
 const Stack = createStackNavigator();
 
@@ -10,7 +13,10 @@ export const UserStackNavigation = () =>{
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown:false
+        header: () => <HeaderContentComponent />,
+        cardStyle:{
+          backgroundColor:"#fff"
+        }
       }}
       initialRouteName='ProfileScreen'
     >

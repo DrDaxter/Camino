@@ -6,18 +6,23 @@ export interface DataStructure{
 
 export const Data:DataStructure[] = [
     {
-        icon:'car',
+        icon:'car-outline',
         title:'Tus Rutas',
         component:'UserRutas'
     },
     {
-        icon:'people',
+        icon:'people-outline',
         title:'Comunidad',
         component:'UserComunidad'
     },
     {
-        icon:'receipt',
+        icon:'receipt-outline',
         title:'Politicas de Uso',
+        component:'UserPoliticas'
+    },
+    {
+        icon:'settings-outline',
+        title:'Configuraciones',
         component:'UserPoliticas'
     },
 ]
