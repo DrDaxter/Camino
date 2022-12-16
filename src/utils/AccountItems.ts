@@ -6,6 +6,11 @@ export interface DataStructure{
 
 export const Data:DataStructure[] = [
     {
+        icon:'person-outline',
+        title:'Perfil',
+        component:'UserRutas'
+    },
+    {
         icon:'car-outline',
         title:'Tus Rutas',
         component:'UserRutas'

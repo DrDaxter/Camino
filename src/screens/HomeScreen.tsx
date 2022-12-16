@@ -1,6 +1,6 @@
 import Geolocation from '@react-native-community/geolocation'
 import React, { useEffect, useState,useContext,useCallback } from 'react'
-import { Button, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ActivityIndicator } from 'react-native-paper'
 import { HomeButtonsContent } from '../components/HomeButtonsContent'
@@ -9,7 +9,6 @@ import { SimpleAlert } from '../utils/SimpleAlert'
 import { ContextServicio } from '../context/ServiciosContext'
 import { Coords } from '../interfaces/LocationsInterface'
 import { Colors } from '../theme/Colors'
-import { EjemploButtomSheet } from '../components/EjemploButtomSheet'
 
 
 export const HomeScreen = () => {
