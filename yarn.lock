@@ -1411,6 +1411,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-16.3.0.tgz#8ae32bd0ddc8209b549dca83edc836908462c999"
   integrity sha512-YSNRmABBwnDVFwCU7jqfGns8corUtYiWgQ+GOBAiNjf3YqxeLOsSde+zmZDhnK40IuUKa5oODK6YQXRgOqdQaQ==
 
+"@react-native-google-signin/google-signin@^9.0.1":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-9.0.1.tgz#808f28ee0c9555f85fd5ccfa47fc8c6f1a77433f"
+  integrity sha512-UCGiE+Vjc34otpWghbwtRJRYfS3lJRsDBQ0hw/689nxpkpAoGQ6xoRqbChcwA76EXMkkiOJwBWhuSNrCRcWTYw==
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
@@ -6025,6 +6030,11 @@ react-freeze@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/react-freeze/-/react-freeze-1.0.3.tgz#5e3ca90e682fed1d73a7cb50c2c7402b3e85618d"
   integrity sha512-ZnXwLQnGzrDpHBHiC56TXFXvmolPeMjTn1UOm610M4EXGzbEDR7oOIyS2ZiItgbs6eZc4oU/a0hpk8PrcKvv5g==
+
+react-hook-form@^7.40.0:
+  version "7.40.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.40.0.tgz#62bc939dddca88522cd7f5135b6603192ccf7e17"
+  integrity sha512-0rokdxMPJs0k9bvFtY6dbcSydyNhnZNXCR49jgDr/aR03FDHFOK6gfh8ccqB3fl696Mk7lqh04xdm+agqWXKSw==
 
 "react-is@^16.12.0 || ^17.0.0 || ^18.0.0", react-is@^18.1.0:
   version "18.2.0"

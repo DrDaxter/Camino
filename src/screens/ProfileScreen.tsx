@@ -1,14 +1,29 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native'
+import React, { useEffect,useState } from 'react'
+import { StyleSheet, Text, View, FlatList, Image, Modal } from 'react-native'
 import { UserListData } from '../components/UserListData'
 import { firebase } from '../hooks/firebase/firebase'
 import { Data, DataStructure } from '../utils/AccountItems'
+import { AuthHook } from '../hooks/firebase/AuthHook'
+import { LoginComponent } from '../components/LoginComponent'
 
 interface Props extends StackScreenProps<any,any>{}
 
 export const ProfileScreen = ({navigation}:Props) => {
-  const servicios = firebase()
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState<any>();
+  const {AuthStateChange} = AuthHook()
+
+  useEffect( () => {
+    const suscription = AuthStateChange(onAuthStateChanged)
+    return suscription
+  },[])
+
+  function onAuthStateChanged(user:any) {
+    console.log("USER-> ",user)
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
 
   const RenderItem = (item:DataStructure) => {
     return(
@@ -23,9 +38,26 @@ export const ProfileScreen = ({navigation}:Props) => {
   const FlatPressHandler = (component:string) => {
     navigation.navigate(component)
   }
+
+  if(initializing) return null
   
   return (
     <View style={styles.mainContent}>
+
+      <Modal
+        transparent={true}
+        visible={true}
+      >
+        <View style={{
+          flex:1,
+          alignItems:'center',
+          justifyContent:'center',
+          backgroundColor:'rgba(0, 0, 0, 0.3)'
+        }}>
+          <LoginComponent />
+        </View>
+      </Modal>
+
       <View style={styles.useInformationContent}>
         <Image 
           source={{uri:"https://i.pinimg.com/736x/89/90/48/899048ab0cc455154006fdb9676964b3.jpg"}}
