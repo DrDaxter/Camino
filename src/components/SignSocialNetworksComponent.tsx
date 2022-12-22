@@ -1,21 +1,24 @@
+import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 interface Props{
     imagePath:any,
     title:string,
-    onPress: () => void
+    btnColor:string,
+    authFunction: ()=> void
 }
 export const SignSocialNetworksComponent = ({
     imagePath,
     title,
-    onPress
+    btnColor,
+    authFunction
 }:Props) => {
   return (
     <TouchableOpacity
-        onPress={() => onPress}
+        onPress={authFunction}
     >
-        <View style={styles.btnContent}>
+        <View style={{...styles.btnContent,backgroundColor:btnColor}}>
             <View style={styles.imageSeccion}>
                 <Image 
                     source={imagePath}
@@ -39,7 +42,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         width:'100%',
         height:50,
-        backgroundColor:'#4285f4'
+        backgroundColor:'white'
     },
     imageSeccion:{
         width:60,

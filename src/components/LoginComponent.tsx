@@ -25,8 +25,15 @@ export const LoginComponent = () => {
             <SignSocialNetworksComponent 
               imagePath={require('../assets/images/google_icon.png')}
               title="Iniciar Sesión con GOOGLE"
-              onPress={signWithGoogle}
+              btnColor="#4285f4"
+              authFunction={signWithGoogle}
             />
+            {/* <SignSocialNetworksComponent 
+              imagePath={require('../assets/images/google_icon.png')}
+              title="Iniciar Sesión con Twitter"
+              btnColor="#1da1f2"
+              onPress={signWithGoogle}
+            /> */}
         </View>
     </View>
   )
