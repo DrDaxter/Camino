@@ -1,26 +1,29 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect,useState } from 'react'
-import { StyleSheet, Text, View, FlatList, Image, Modal } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Image, Modal, TouchableOpacity } from 'react-native'
 import { UserListData } from '../components/UserListData'
 import { firebase } from '../hooks/firebase/firebase'
 import { Data, DataStructure } from '../utils/AccountItems'
 import { AuthHook } from '../hooks/firebase/AuthHook'
 import { LoginComponent } from '../components/LoginComponent'
+import Icon from 'react-native-vector-icons/Ionicons'
+import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
 interface Props extends StackScreenProps<any,any>{}
 
 export const ProfileScreen = ({navigation}:Props) => {
   const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState<any>();
+  const [user, setUser] = useState<FirebaseAuthTypes.User|null>();
+  const [showLoginModal, setShowLoginModal] = useState(true)
   const {AuthStateChange} = AuthHook()
 
   useEffect( () => {
     const suscription = AuthStateChange(onAuthStateChanged)
+    //setShowLoginModal(!showLoginModal && !user ? true : false)
     return suscription
-  },[])
+  },[user])
 
-  function onAuthStateChanged(user:any) {
-    console.log("USER-> ",user)
+  function onAuthStateChanged(user:FirebaseAuthTypes.User|null) {
     setUser(user);
     if (initializing) setInitializing(false);
   }
@@ -43,20 +46,24 @@ export const ProfileScreen = ({navigation}:Props) => {
   
   return (
     <View style={styles.mainContent}>
-
-      <Modal
-        transparent={true}
-        visible={true}
-      >
-        <View style={{
-          flex:1,
-          alignItems:'center',
-          justifyContent:'center',
-          backgroundColor:'rgba(0, 0, 0, 0.3)'
-        }}>
-          <LoginComponent />
-        </View>
-      </Modal>
+     
+          <Modal
+          transparent={true}
+          visible={!user}
+          >
+            <View style={styles.loginModal}>
+              <TouchableOpacity
+                style={styles.closeLoginModal}
+                onPress={() => setShowLoginModal(false)}
+              >
+                <Icon 
+                    name='close'
+                    color="#000"
+                    size={35}/>
+              </TouchableOpacity>
+              <LoginComponent />
+            </View>
+          </Modal>
 
       <View style={styles.useInformationContent}>
         <Image 
@@ -68,7 +75,7 @@ export const ProfileScreen = ({navigation}:Props) => {
             color:"#000",
             opacity:0.5
           }}>Bienvenido</Text>
-          <Text style={styles.strongText}>Guillermo Ramirez</Text>
+          <Text style={styles.strongText}>{user?.displayName || 'No hay nombre'}</Text>
         </View>
       </View>
       <View style={styles.itemsContent}>
@@ -112,5 +119,20 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     color:'#000',
     fontSize:15
+  },
+  loginModal:{
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:'rgba(0, 0, 0, 0.3)'
+  },
+  closeLoginModal:{
+    position:'absolute',
+    backgroundColor:'#E5E5E5',
+    top:100,
+    right:0,
+    margin:10,
+
+    borderRadius:50
   }
 })

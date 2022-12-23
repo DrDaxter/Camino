@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import auth from '@react-native-firebase/auth'
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 
 interface AuthProps{
@@ -9,7 +9,7 @@ interface AuthProps{
 export const AuthHook = () => {
     
     const AuthStateChange = (
-        onAoutStateChange: (user:any) => void
+        onAoutStateChange: (user:FirebaseAuthTypes.User|null) => void
     ) => 
     {
         const authSubscription = auth().onAuthStateChanged((user) => onAoutStateChange(user))

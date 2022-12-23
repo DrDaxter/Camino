@@ -6,6 +6,14 @@ import { SignSocialNetworksComponent } from './SignSocialNetworksComponent'
 const screenWidth = Dimensions.get('screen').width
 export const LoginComponent = () => {
   const {signWithGoogle} = AuthHook()
+
+  const googleAuthAction = () => {
+    signWithGoogle().then(data => {
+      console.log(data)
+    }).catch(error => {
+      throw new Error(`Error found in loginComponent ${error}`);
+    })
+  }
     
   return (
     <View style={styles.mainContent}>
@@ -26,7 +34,7 @@ export const LoginComponent = () => {
               imagePath={require('../assets/images/google_icon.png')}
               title="Iniciar Sesión con GOOGLE"
               btnColor="#4285f4"
-              authFunction={signWithGoogle}
+              authFunction={googleAuthAction}
             />
             {/* <SignSocialNetworksComponent 
               imagePath={require('../assets/images/google_icon.png')}
