@@ -19,12 +19,14 @@ export const ProfileScreen = ({navigation}:Props) => {
 
   useEffect( () => {
     const suscription = AuthStateChange(onAuthStateChanged)
-    //setShowLoginModal(!showLoginModal && !user ? true : false)
     return suscription
   },[user])
 
   function onAuthStateChanged(user:FirebaseAuthTypes.User|null) {
-    setUser(user);
+    if(user){
+      setUser(user);
+      setShowLoginModal(false)
+    }
     if (initializing) setInitializing(false);
   }
 
@@ -39,31 +41,34 @@ export const ProfileScreen = ({navigation}:Props) => {
   }
 
   const FlatPressHandler = (component:string) => {
-    navigation.navigate(component)
+    if(user){
+      navigation.navigate(component)
+    }else{
+      setShowLoginModal(true)
+    }
   }
 
   if(initializing) return null
   
   return (
     <View style={styles.mainContent}>
-     
-          <Modal
-          transparent={true}
-          visible={!user}
+      <Modal
+        transparent={true}
+        visible={!user && showLoginModal}
+      >
+        <View style={styles.loginModal}>
+          <TouchableOpacity
+            style={styles.closeLoginModal}
+            onPress={() => setShowLoginModal(false)}
           >
-            <View style={styles.loginModal}>
-              <TouchableOpacity
-                style={styles.closeLoginModal}
-                onPress={() => setShowLoginModal(false)}
-              >
-                <Icon 
-                    name='close'
-                    color="#000"
-                    size={35}/>
-              </TouchableOpacity>
-              <LoginComponent />
-            </View>
-          </Modal>
+            <Icon 
+                name='close'
+                color="#000"
+                size={35}/>
+          </TouchableOpacity>
+          <LoginComponent />
+        </View>
+      </Modal>
 
       <View style={styles.useInformationContent}>
         <Image 
@@ -85,6 +90,7 @@ export const ProfileScreen = ({navigation}:Props) => {
           keyExtractor={item => item.title}
         />
       </View>
+        
     </View>
   )
 }
