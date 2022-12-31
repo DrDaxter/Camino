@@ -2,6 +2,7 @@ import React from 'react'
 import {Dimensions, StyleSheet, Text, View, Image, Button, TouchableOpacity} from 'react-native'
 import { AuthHook } from '../hooks/firebase/AuthHook'
 import { SignSocialNetworksComponent } from './SignSocialNetworksComponent'
+import { Titles } from '../utils/Titles'
 
 const screenWidth = Dimensions.get('screen').width
 export const LoginComponent = () => {
@@ -20,13 +21,16 @@ export const LoginComponent = () => {
         <View style={styles.logoContent}>
           <Image 
             source={require('../assets/images/truck_gps.png')}
-            style={{ width:300, height:300}}
+            style={{ width:250, height:250}}
           />
         </View>
         <View style={styles.bodyContainer}>
-            <Text style={styles.loginTitle}>
-              Inicia Sesión
-            </Text>
+            <Titles 
+              text='Inicia Sesion'
+              color='#000'
+              size={25}
+              font="Roboto-Medium"
+            />
             <Text style={styles.loginSubtitle}>
               ¡Accede a nuestro servicios registrandote ahora!
             </Text>
@@ -63,14 +67,10 @@ const styles = StyleSheet.create({
     bodyContainer:{
       height:100,
     },
-    loginTitle:{
-      fontSize:30,
-      color:'#000',
-      fontFamily:'Roboto-Medium'
-    },
     loginSubtitle:{
       color:'#000',
       fontFamily:'Roboto-Regular',
-      fontSize:19
+      fontSize:19,
+      marginVertical:5
     }
 })

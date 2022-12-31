@@ -17,6 +17,7 @@ export const SignSocialNetworksComponent = ({
   return (
     <TouchableOpacity
         onPress={authFunction}
+        style={{marginVertical:10}}
     >
         <View style={{...styles.btnContent,backgroundColor:btnColor}}>
             <View style={styles.imageSeccion}>
