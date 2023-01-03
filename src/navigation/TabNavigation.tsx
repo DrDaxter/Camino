@@ -20,33 +20,33 @@ const AndroidTab = () => {
         <BottomTabAndroid.Navigator
             sceneAnimationEnabled={true}
             barStyle={{
-                backgroundColor:Colors.primary
+                backgroundColor:Colors.primary_light
             }}
             screenOptions={({route}) => ({
                 tabBarIcon: ({color}) => {
                     let iconName:string
                     switch (route.name) {
                         case 'HomeScreen':
-                            iconName = 'earth'
+                            iconName = 'earth-outline'
                             break;
                         case 'UserStackNavigation':
-                            iconName = 'person';
+                            iconName = 'person-outline';
                             break;
                         case 'Inventory':
-                            iconName = 'book'
+                            iconName = 'book-outline'
                             break;
                     
                         default:
                             break;
                     }
-                    return <Icon name={iconName!} size={20} color="#fff" />
+                    return <Icon name={iconName!} size={20} color={Colors.black1} />
                 }
             })}
             initialRouteName='HomeScreen'
         >
-            <BottomTabAndroid.Screen  name='UserStackNavigation' component={UserStackNavigation}/>
-            <BottomTabAndroid.Screen name='HomeScreen' component={HomeScreen}/>
-            <BottomTabAndroid.Screen  name='Inventory' component={Inventory}/>
+            <BottomTabAndroid.Screen  name='UserStackNavigation' options={{title:"Perfil"}} component={UserStackNavigation}/>
+            <BottomTabAndroid.Screen name='HomeScreen' options={{title:"Encontrar"}} component={HomeScreen}/>
+            <BottomTabAndroid.Screen  name='Inventory' options={{title:"Historial"}} component={Inventory}/>
 
         </BottomTabAndroid.Navigator>
     )

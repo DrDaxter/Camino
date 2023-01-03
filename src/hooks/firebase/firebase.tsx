@@ -15,9 +15,18 @@ export const firebase = () => {
     })
     return servicesArr
   }
+
+  const saveData = async (document:any) => {
+    const response = await firestore().collection('user')
+    .doc(document.uid)
+    .set({...document})
+
+    return response
+  }
   
 
  return{
-  getFireServicios
+  getFireServicios,
+  saveData
  }
 }

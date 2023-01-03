@@ -1,23 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Dimensions, StyleSheet, Text, View, Image, Button, TouchableOpacity} from 'react-native'
 import { AuthHook } from '../hooks/firebase/AuthHook'
 import { SignSocialNetworksComponent } from './SignSocialNetworksComponent'
 import { Titles } from '../utils/Titles'
+import { firebase } from '../hooks/firebase/firebase'
+import { SimpleLoader } from '../utils/SimpleLoader'
+import { Colors } from '../theme/Colors'
 
 const screenWidth = Dimensions.get('screen').width
 export const LoginComponent = () => {
+  const [showLoader, setShowLoader] = useState(false)
+  const {saveData} = firebase()
   const {signWithGoogle} = AuthHook()
 
   const googleAuthAction = () => {
+    setShowLoader(true)
     signWithGoogle().then(data => {
-      console.log(data)
+      const {user} = data
+      saveData(
+        {
+          "Nombre":user.displayName,
+          "email":user.email,
+          "phone_number":user.phoneNumber,
+          "photo":user.photoURL,
+          "uid":user.uid
+        }
+      ).finally(()=> setShowLoader(false))
     }).catch(error => {
+      setShowLoader(false)
       throw new Error(`Error found in loginComponent ${error}`);
     })
   }
     
   return (
     <View style={styles.mainContent}>
+        <SimpleLoader 
+          visible={showLoader}
+          color={Colors.primary}
+        />
         <View style={styles.logoContent}>
           <Image 
             source={require('../assets/images/truck_gps.png')}
@@ -31,9 +51,6 @@ export const LoginComponent = () => {
               size={25}
               font="Roboto-Medium"
             />
-            <Text style={styles.loginSubtitle}>
-              ¡Accede a nuestro servicios registrandote ahora!
-            </Text>
             <SignSocialNetworksComponent 
               imagePath={require('../assets/images/google_icon.png')}
               title="Iniciar Sesión con GOOGLE"

@@ -8,6 +8,7 @@ import { AuthHook } from '../hooks/firebase/AuthHook'
 import { LoginComponent } from '../components/LoginComponent'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import { Colors } from '../theme/Colors'
 
 interface Props extends StackScreenProps<any,any>{}
 
@@ -98,6 +99,7 @@ export const ProfileScreen = ({navigation}:Props) => {
 const styles = StyleSheet.create({
   mainContent:{
     flex:1,
+    backgroundColor:Colors.white2,
   },
   useInformationContent:{
     flexDirection:'row',
