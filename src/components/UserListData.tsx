@@ -25,7 +25,7 @@ export const UserListData = ({
     >
         <View >
             <Icon 
-                name={selected === title || title === "Perfil" ? iconName.split('-outline').join('') : iconName}
+                name={selected === title ? iconName.split('-outline').join('') : iconName}
                 size={25}
                 color={selected === title ? Colors.primary : Colors.black1}
                 

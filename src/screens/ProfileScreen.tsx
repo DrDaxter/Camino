@@ -77,7 +77,7 @@ export const ProfileScreen = ({navigation}:Props) => {
 
       <View style={styles.useInformationContent}>
         <Image 
-          source={{uri:"https://i.pinimg.com/736x/89/90/48/899048ab0cc455154006fdb9676964b3.jpg"}}
+          source={{uri: user?.photoURL || "https://i.pinimg.com/736x/89/90/48/899048ab0cc455154006fdb9676964b3.jpg"}}
           style={styles.userPhoto}
         />
         <View style={{justifyContent:'flex-end'}}>
