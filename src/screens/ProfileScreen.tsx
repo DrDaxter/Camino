@@ -14,6 +14,7 @@ interface Props extends StackScreenProps<any,any>{}
 
 export const ProfileScreen = ({navigation}:Props) => {
   const [initializing, setInitializing] = useState(true);
+  const [selectedItem, setSelectedItem] = useState("")
   const [user, setUser] = useState<FirebaseAuthTypes.User|null>();
   const [showLoginModal, setShowLoginModal] = useState(true)
   const {AuthStateChange} = AuthHook()
@@ -36,14 +37,17 @@ export const ProfileScreen = ({navigation}:Props) => {
       <UserListData 
         iconName={item.icon} 
         title={item.title} 
-        onPress={()=> FlatPressHandler(item.component)}
+        onPress={()=> FlatPressHandler(item)}
+        selected={selectedItem}
+        
       />
     )
   }
 
-  const FlatPressHandler = (component:string) => {
+  const FlatPressHandler = (item:DataStructure) => {
+    setSelectedItem(item.title)
     if(user){
-      navigation.navigate(component)
+      navigation.navigate(item.component)
     }else{
       setShowLoginModal(true)
     }

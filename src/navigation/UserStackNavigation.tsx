@@ -6,6 +6,7 @@ import { UserPoliticas } from '../screens/userAccount/UserPoliticas';
 import { UserRutas } from '../screens/userAccount/UserRutas';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { HeaderContentComponent } from '../components/HeaderContentComponent';
+import { Colors } from '../theme/Colors';
 
 const Stack = createStackNavigator();
 
@@ -15,7 +16,7 @@ export const UserStackNavigation = () =>{
       screenOptions={{
         header: () => <HeaderContentComponent />,
         cardStyle:{
-          backgroundColor:"#fff"
+          backgroundColor:Colors.white2
         }
       }}
       initialRouteName='ProfileScreen'

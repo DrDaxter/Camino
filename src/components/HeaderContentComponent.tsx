@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Dimensions, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { Colors } from '../theme/Colors'
 
 const screenWidth = Dimensions.get('screen').width
 export const HeaderContentComponent = () => {
@@ -14,7 +15,7 @@ export const HeaderContentComponent = () => {
                 <Icon 
                     name="search-outline"
                     size={25}
-                    color="#000"
+                    color={Colors.white1}
                 />
             </View>
         </TouchableOpacity>
@@ -25,6 +26,7 @@ export const HeaderContentComponent = () => {
                         placeholder="useless placeholder"
                         keyboardType="default"
                         style={styles.inputStyle}
+                        multiline={false}
                     />
                 )
             }
@@ -36,7 +38,7 @@ export const HeaderContentComponent = () => {
 const styles = StyleSheet.create({
     mainContent:{
         flexDirection:'row',
-        backgroundColor:"#fff",
+        backgroundColor:Colors.primary_dark,
         width:screenWidth,
         height:60,
         paddingHorizontal:10,
@@ -49,9 +51,9 @@ const styles = StyleSheet.create({
         width:50
     },
     inputStyle:{
-        color:"#000",
-        borderColor:"#303030",
-        borderWidth:1,
-        borderRadius:10
+        color:Colors.white1,
+        borderColor:Colors.white1,
+        borderBottomWidth:1,
+        marginBottom:10
     }
 })

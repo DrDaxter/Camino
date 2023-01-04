@@ -1,10 +1,13 @@
 import React from 'react'
 import { StyleSheet, Text, View, Dimensions,TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { Colors } from '../theme/Colors'
 
 interface Props{
     iconName:string,
     title:string,
+    selected:any,
+    
     onPress:()=>void
 }
 const screenWidth = Dimensions.get('screen').width
@@ -12,6 +15,7 @@ const screenWidth = Dimensions.get('screen').width
 export const UserListData = ({
     iconName,
     title,
+    selected,
     onPress
 }:Props) => {
   return (
@@ -19,11 +23,11 @@ export const UserListData = ({
         style={styles.mainContent}
         onPress={onPress}
     >
-        <View>
+        <View >
             <Icon 
-                name={iconName}
+                name={selected === title || title === "Perfil" ? iconName.split('-outline').join('') : iconName}
                 size={25}
-                color="#000"
+                color={selected === title ? Colors.primary : Colors.black1}
                 
             />
         </View>

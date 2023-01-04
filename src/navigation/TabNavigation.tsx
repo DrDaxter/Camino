@@ -39,7 +39,7 @@ const AndroidTab = () => {
                         default:
                             break;
                     }
-                    return <Icon name={iconName!} size={20} color={Colors.black1} />
+                    return <Icon name={iconName!} size={20} color={Colors.white1} />
                 }
             })}
             initialRouteName='HomeScreen'
