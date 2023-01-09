@@ -38,31 +38,33 @@ export const LoginComponent = () => {
           visible={showLoader}
           color={Colors.primary}
         />
-        <View style={styles.logoContent}>
+        {/* <View style={styles.logoContent}>
           <Image 
             source={require('../assets/images/truck_gps.png')}
             style={{ width:250, height:250}}
           />
-        </View>
+        </View> */}
         <View style={styles.bodyContainer}>
-            <Titles 
-              text='Inicia Sesion'
-              color='#000'
-              size={25}
-              font="Roboto-Medium"
-            />
-            <SignSocialNetworksComponent 
-              imagePath={require('../assets/images/google_icon.png')}
-              title="Iniciar Sesión con GOOGLE"
-              btnColor="#4285f4"
-              authFunction={googleAuthAction}
-            />
-            {/* <SignSocialNetworksComponent 
-              imagePath={require('../assets/images/google_icon.png')}
-              title="Iniciar Sesión con Twitter"
-              btnColor="#1da1f2"
-              onPress={signWithGoogle}
-            /> */}
+          <Titles 
+            text="Inicia Sesion"
+            color={Colors.white1}
+            size={35}
+            font="Roboto-Bold"
+          />
+          <Titles 
+            text="Disfruta de nuestro servicios"
+            color={Colors.white1}
+            font="Roboto-Medium"
+            marginVertical={0}
+          />
+        </View>
+        <View style={styles.btnSocialLogin}>
+          <SignSocialNetworksComponent 
+            imagePath={require('../assets/images/google_icon.png')}
+            title="Iniciar Sesión con GOOGLE"
+            btnColor="#4285f4"
+            authFunction={googleAuthAction}
+          />
         </View>
     </View>
   )
@@ -72,22 +74,28 @@ const styles = StyleSheet.create({
     mainContent:{
       flexDirection:'column',
       width:400,
-      height:500,
-      backgroundColor:'white',
-      borderRadius:10,
-      paddingHorizontal:5
+      height:'90%',
+      backgroundColor:Colors.primary,
     },
     logoContent:{
       justifyContent:'center',
       alignItems:'center'
     },
     bodyContainer:{
-      height:100,
+      alignItems:'flex-start',
+      height:200,
+      marginVertical:15,
+      paddingHorizontal:10
     },
     loginSubtitle:{
       color:'#000',
       fontFamily:'Roboto-Regular',
       fontSize:19,
       marginVertical:5
+    },
+    btnSocialLogin:{
+      flex:1,
+      backgroundColor:Colors.white2,
+      justifyContent:'flex-end'
     }
 })

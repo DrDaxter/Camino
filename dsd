@@ -1,0 +1,351 @@
+[1mdiff --git a/babel.config.js b/babel.config.js[m
+[1mindex 5064d24..f842b77 100644[m
+[1m--- a/babel.config.js[m
+[1m+++ b/babel.config.js[m
+[36m@@ -1,6 +1,3 @@[m
+ module.exports = {[m
+   presets: ['module:metro-react-native-babel-preset'],[m
+[31m-  plugins:[[m
+[31m-    'react-native-reanimated/plugin',[m
+[31m-  ][m
+ };[m
+[1mdiff --git a/package.json b/package.json[m
+[1mindex 511f6ae..4ee5f20 100644[m
+[1m--- a/package.json[m
+[1m+++ b/package.json[m
+[36m@@ -10,17 +10,14 @@[m
+     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"[m
+   },[m
+   "dependencies": {[m
+[31m-    "@gorhom/bottom-sheet": "^4",[m
+     "@react-native-community/geolocation": "^3.0.2",[m
+     "@react-navigation/bottom-tabs": "^6.4.0",[m
+     "@react-navigation/material-bottom-tabs": "^6.2.4",[m
+     "@react-navigation/native": "^6.0.13",[m
+     "react": "18.1.0",[m
+     "react-native": "0.70.2",[m
+[31m-    "react-native-gesture-handler": "^2.8.0",[m
+     "react-native-maps": "^1.3.2",[m
+     "react-native-paper": "^4.12.5",[m
+[31m-    "react-native-reanimated": "^2.11.0",[m
+     "react-native-safe-area-context": "^4.4.1",[m
+     "react-native-screens": "^3.18.0",[m
+     "react-native-vector-icons": "^9.2.0"[m
+[1mdiff --git a/src/components/HomeButtonsContent.tsx b/src/components/HomeButtonsContent.tsx[m
+[1mdeleted file mode 100644[m
+[1mindex 6610d0f..0000000[m
+[1m--- a/src/components/HomeButtonsContent.tsx[m
+[1m+++ /dev/null[m
+[36m@@ -1,49 +0,0 @@[m
+[31m-import React, { useCallback, useMemo, useRef } from 'react'[m
+[31m-import BottomSheet from '@gorhom/bottom-sheet';[m
+[31m-import { Button, StyleSheet, Text, View } from 'react-native';[m
+[31m-import { SimpleButtonIconText } from './SimpleButtonIconText';[m
+[31m-[m
+[31m-export const HomeButtonsContent = () => {[m
+[31m-  const bottomSheetRef = useRef<BottomSheet>(null);[m
+[31m-  const snapPoints = useMemo(() => ['25%', '50%'], []);[m
+[31m-[m
+[31m-  const handleClosePress = useCallback(() => {[m
+[31m-    bottomSheetRef.current?.close();[m
+[31m-  }, []);[m
+[31m-  return ([m
+[31m-    <>[m
+[31m-    <BottomSheet [m
+[31m-        ref={bottomSheetRef}[m
+[31m-        snapPoints={snapPoints}[m
+[31m-        onChange={()=>console.log("ALGO")}[m
+[31m-        enablePanDownToClose={true}[m
+[31m-        >[m
+[31m-[m
+[31m-            <View style={styles.buttonsContainer}>[m
+[31m-            <SimpleButtonIconText[m
+[31m-                text={"Servicio \nmecánico"}[m
+[31m-                iconName="briefcase-outline"[m
+[31m-                action={handleClosePress}[m
+[31m-            />[m
+[31m-            <SimpleButtonIconText [m
+[31m-                text={"Cambio de \nllantas"}[m
+[31m-                iconName="build-outline"[m
+[31m-            />[m
+[31m-            <SimpleButtonIconText [m
+[31m-                text={"Servicio de \ngrua"}[m
+[31m-                iconName="car-outline"[m
+[31m-            />[m
+[31m-            </View>[m
+[31m-    </BottomSheet>[m
+[31m-    </>[m
+[31m-  )[m
+[31m-}[m
+[31m-[m
+[31m-const styles = StyleSheet.create({[m
+[31m-    buttonsContainer:{[m
+[31m-        marginVertical:30,[m
+[31m-        flexDirection:'row',[m
+[31m-        justifyContent:'space-around',[m
+[31m-        alignItems:'center'[m
+[31m-    },[m
+[31m-})[m
+\ No newline at end of file[m
+[1mdiff --git a/src/components/SimpleButtonIconText.tsx b/src/components/SimpleButtonIconText.tsx[m
+[1mindex 4cb8b8b..34043bb 100644[m
+[1m--- a/src/components/SimpleButtonIconText.tsx[m
+[1m+++ b/src/components/SimpleButtonIconText.tsx[m
+[36m@@ -5,13 +5,12 @@[m [mimport { constStyles } from '../theme/Const'[m
+ [m
+ interface Props{[m
+     text:string,[m
+[31m-    iconName:string,[m
+[31m-    action?: ()=>void[m
+[32m+[m[32m    iconName:string[m
+ }[m
+ [m
+[31m-export const SimpleButtonIconText = ({text,iconName,action}:Props) => {[m
+[32m+[m[32mexport const SimpleButtonIconText = ({text,iconName}:Props) => {[m
+   return ([m
+[31m-    <TouchableOpacity onPress={action}>[m
+[32m+[m[32m    <TouchableOpacity>[m
+         <View style={styles.buttonContent}>[m
+         <Icon [m
+             name={iconName}[m
+[36m@@ -28,6 +27,7 @@[m [mexport const SimpleButtonIconText = ({text,iconName,action}:Props) => {[m
+ [m
+ const styles = StyleSheet.create({[m
+     buttonContent:{[m
+[32m+[m[32m        marginHorizontal:20,[m
+         alignItems:'center'[m
+     }[m
+ })[m
+\ No newline at end of file[m
+[1mdiff --git a/src/screens/HomeScreen.tsx b/src/screens/HomeScreen.tsx[m
+[1mindex d02fb2d..3b7968c 100644[m
+[1m--- a/src/screens/HomeScreen.tsx[m
+[1m+++ b/src/screens/HomeScreen.tsx[m
+[36m@@ -1,10 +1,9 @@[m
+ import Geolocation from '@react-native-community/geolocation'[m
+[31m-import React, { useEffect, useState, useRef,useMemo,useCallback } from 'react'[m
+[32m+[m[32mimport React, { useEffect, useState } from 'react'[m
+ import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'[m
+ import { ActivityIndicator } from 'react-native-paper'[m
+ import Icon from 'react-native-vector-icons/Ionicons'[m
+ import { ExampleLocations } from '../api/DataExample'[m
+[31m-import { HomeButtonsContent } from '../components/HomeButtonsContent'[m
+ import { MapComponent } from '../components/MapComponent'[m
+ import { SimpleButtonIconText } from '../components/SimpleButtonIconText'[m
+ import { calculateDistance } from '../hooks/CalculateDistance'[m
+[36m@@ -12,12 +11,11 @@[m [mimport { Coords } from '../interfaces/LocationsInterface'[m
+ import { Colors } from '../theme/Colors'[m
+ import { constStyles } from '../theme/Const'[m
+ [m
+[31m-[m
+ export const HomeScreen = () => {[m
+   const screenWidth = Dimensions.get('screen').width[m
+   const [currentLc, setCurrentLc] = useState<Coords>()[m
+   const exampleLocations = ExampleLocations()[m
+[31m-[m
+[32m+[m[41m  [m
+   const getLocation = async () => {[m
+     await Geolocation.getCurrentPosition(({coords})=> {[m
+       setCurrentLc(coords)[m
+[36m@@ -58,8 +56,7 @@[m [mexport const HomeScreen = () => {[m
+               lt={currentLc.latitude}[m
+             />[m
+ [m
+[31m-            <HomeButtonsContent />[m
+[31m-            {/* <View style={{...styles.helOptionsContent, width:screenWidth}}>[m
+[32m+[m[32m            <View style={{...styles.helOptionsContent, width:screenWidth}}>[m
+               <View style={styles.buttonsContainer}>[m
+                 <SimpleButtonIconText [m
+                   text={"Servicio \nmecánico"}[m
+[36m@@ -74,7 +71,7 @@[m [mexport const HomeScreen = () => {[m
+                   iconName="car-outline"[m
+                 />[m
+               </View>[m
+[31m-            </View> */}[m
+[32m+[m[32m            </View>[m
+           </View>[m
+         )[m
+         :([m
+[36m@@ -106,5 +103,9 @@[m [mconst styles = StyleSheet.create({[m
+     borderTopRightRadius:40,[m
+     justifyContent:'center'[m
+   },[m
+[32m+[m[32m  buttonsContainer:{[m
+[32m+[m[32m    flexDirection:'row',[m
+[32m+[m[32m    justifyContent:'center'[m
+[32m+[m[32m  },[m
+  [m
+ })[m
+\ No newline at end of file[m
+[1mdiff --git a/yarn.lock b/yarn.lock[m
+[1mindex 0c16a42..006334f 100644[m
+[1m--- a/yarn.lock[m
+[1m+++ b/yarn.lock[m
+[36m@@ -578,13 +578,6 @@[m
+     "@babel/helper-create-regexp-features-plugin" "^7.19.0"[m
+     "@babel/helper-plugin-utils" "^7.19.0"[m
+ [m
+[31m-"@babel/plugin-transform-object-assign@^7.16.7":[m
+[31m-  version "7.18.6"[m
+[31m-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-object-assign/-/plugin-transform-object-assign-7.18.6.tgz#7830b4b6f83e1374a5afb9f6111bcfaea872cdd2"[m
+[31m-  integrity sha512-mQisZ3JfqWh2gVXvfqYCAAyRs6+7oev+myBsTwW5RnPhYXOTuCEw2oe3YgxlXMViXUS53lG8koulI7mJ+8JE+A==[m
+[31m-  dependencies:[m
+[31m-    "@babel/helper-plugin-utils" "^7.18.6"[m
+[31m-[m
+ "@babel/plugin-transform-object-super@^7.0.0":[m
+   version "7.18.6"[m
+   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-object-super/-/plugin-transform-object-super-7.18.6.tgz#fb3c6ccdd15939b6ff7939944b51971ddc35912c"[m
+[36m@@ -706,7 +699,7 @@[m
+     "@babel/helper-validator-option" "^7.18.6"[m
+     "@babel/plugin-transform-flow-strip-types" "^7.18.6"[m
+ [m
+[31m-"@babel/preset-typescript@^7.13.0", "@babel/preset-typescript@^7.16.7":[m
+[32m+[m[32m"@babel/preset-typescript@^7.13.0":[m
+   version "7.18.6"[m
+   resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.18.6.tgz#ce64be3e63eddc44240c6358daefac17b3186399"[m
+   integrity sha512-s9ik86kXBAnD760aybBucdpnLsAt0jK1xqJn2juOn9lkOvSHV60os5hxoVJsPzMQxvnUJFAlkont2DvvaYEBtQ==[m
+[36m@@ -788,13 +781,6 @@[m
+     exec-sh "^0.3.2"[m
+     minimist "^1.2.0"[m
+ [m
+[31m-"@egjs/hammerjs@^2.0.17":[m
+[31m-  version "2.0.17"[m
+[31m-  resolved "https://registry.yarnpkg.com/@egjs/hammerjs/-/hammerjs-2.0.17.tgz#5dc02af75a6a06e4c2db0202cae38c9263895124"[m
+[31m-  integrity sha512-XQsZgjm2EcVUiZQf11UBJQfmZeEmOW8DpI1gsFeln6w0ae0ii4dMQEQ0kjl6DspdWX1aGY1/loyXnP0JS06e/A==[m
+[31m-  dependencies:[m
+[31m-    "@types/hammerjs" "^2.0.36"[m
+[31m-[m
+ "@eslint/eslintrc@^0.4.3":[m
+   version "0.4.3"[m
+   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.4.3.tgz#9e42981ef035beb3dd49add17acb96e8ff6f394c"[m
+[36m@@ -810,21 +796,6 @@[m
+     minimatch "^3.0.4"[m
+     strip-json-comments "^3.1.1"[m
+ [m
+[31m-"@gorhom/bottom-sheet@^4":[m
+[31m-  version "4.4.5"[m
+[31m-  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-4.4.5.tgz#b9041b01ce1af9a936e7c0fc1d78f026d759eebe"[m
+[31m-  integrity sha512-Z5Z20wshLUB8lIdtMKoJaRnjd64wBR/q8EeVPThrg+skrcBwBPHfUwZJ2srB0rEszA/01ejSJy/ixyd7Ra7vUA==[m
+[31m-  dependencies:[m
+[31m-    "@gorhom/portal" "1.0.14"[m
+[31m-    invariant "^2.2.4"[m
+[31m-[m
+[31m-"@gorhom/portal@1.0.14":[m
+[31m-  version "1.0.14"[m
+[31m-  resolved "https://registry.yarnpkg.com/@gorhom/portal/-/portal-1.0.14.tgz#1953edb76aaba80fb24021dc774550194a18e111"[m
+[31m-  integrity sha512-MXyL4xvCjmgaORr/rtryDNFy3kU4qUbKlwtQqqsygd0xX3mhKjOLn6mQK8wfu0RkoE0pBE0nAasRoHua+/QZ7A==[m
+[31m-  dependencies:[m
+[31m-    nanoid "^3.3.1"[m
+[31m-[m
+ "@hapi/hoek@^9.0.0":[m
+   version "9.3.0"[m
+   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.3.0.tgz#8368869dcb735be2e7f5cb7647de78e167a251fb"[m
+[36m@@ -1463,16 +1434,6 @@[m
+   dependencies:[m
+     "@types/node" "*"[m
+ [m
+[31m-"@types/hammerjs@^2.0.36":[m
+[31m-  version "2.0.41"[m
+[31m-  resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.41.tgz#f6ecf57d1b12d2befcce00e928a6a097c22980aa"[m
+[31m-  integrity sha512-ewXv/ceBaJprikMcxCmWU1FKyMAQ2X7a9Gtmzw8fcg2kIePI1crERDM818W+XYrxqdBBOdlf2rm137bU+BltCA==[m
+[31m-[m
+[31m-"@types/invariant@^2.2.35":[m
+[31m-  version "2.2.35"[m
+[31m-  resolved "https://registry.yarnpkg.com/@types/invariant/-/invariant-2.2.35.tgz#cd3ebf581a6557452735688d8daba6cf0bd5a3be"[m
+[31m-  integrity sha512-DxX1V9P8zdJPYQat1gHyY0xj3efl8gnMVjiM9iCY6y27lj+PoQWkgjt8jDqmovPqULkKVpKRg8J36iQiA+EtEg==[m
+[31m-[m
+ "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":[m
+   version "2.0.4"[m
+   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.4.tgz#8467d4b3c087805d63580480890791277ce35c44"[m
+[36m@@ -4754,11 +4715,6 @@[m [mlodash.debounce@^4.0.8:[m
+   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"[m
+   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==[m
+ [m
+[31m-lodash.isequal@^4.5.0:[m
+[31m-  version "4.5.0"[m
+[31m-  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"[m
+[31m-  integrity sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==[m
+[31m-[m
+ lodash.merge@^4.6.2:[m
+   version "4.6.2"[m
+   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"[m
+[36m@@ -4774,7 +4730,7 @@[m [mlodash.truncate@^4.4.2:[m
+   resolved "https://registry.yarnpkg.com/lodash.truncate/-/lodash.truncate-4.4.2.tgz#5a350da0b1113b837ecfffd5812cbe58d6eae193"[m
+   integrity sha512-jttmRe7bRse52OsWIMDLaXxWqRAmtIUccAQ3garviCqJjafXOfNMO0yMfNpdD6zbGaTU0P5Nz7e7gAT6cKmJRw==[m
+ [m
+[31m-lodash@^4.17.10, lodash@^4.17.15, lodash@^4.17.21, lodash@^4.7.0:[m
+[32m+[m[32mlodash@^4.17.10, lodash@^4.17.15, lodash@^4.7.0:[m
+   version "4.17.21"[m
+   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"[m
+   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==[m
+[36m@@ -5225,7 +5181,7 @@[m [mms@2.1.3:[m
+   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"[m
+   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==[m
+ [m
+[31m-nanoid@^3.1.23, nanoid@^3.3.1:[m
+[32m+[m[32mnanoid@^3.1.23:[m
+   version "3.3.4"[m
+   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"[m
+   integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==[m
+[36m@@ -5842,17 +5798,6 @@[m [mreact-native-codegen@^0.70.5:[m
+     jscodeshift "^0.13.1"[m
+     nullthrows "^1.1.1"[m
+ [m
+[31m-react-native-gesture-handler@^2.8.0:[m
+[31m-  version "2.8.0"[m
+[31m-  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.8.0.tgz#ef9857871c10663c95a51546225b6e00cd4740cf"[m
+[31m-  integrity sha512-poOSfz/w0IyD6Qwq7aaIRRfEaVTl1ecQFoyiIbpOpfNTjm2B1niY2FLrdVQIOtIOe+K9nH55Qal04nr4jGkHdQ==[m
+[31m-  dependencies:[m
+[31m-    "@egjs/hammerjs" "^2.0.17"[m
+[31m-    hoist-non-react-statics "^3.3.0"[m
+[31m-    invariant "^2.2.4"[m
+[31m-    lodash "^4.17.21"[m
+[31m-    prop-types "^15.7.2"[m
+[31m-[m
+ react-native-gradle-plugin@^0.70.3:[m
+   version "0.70.3"[m
+   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.3.tgz#cbcf0619cbfbddaa9128701aa2d7b4145f9c4fc8"[m
+[36m@@ -5879,19 +5824,6 @@[m [mreact-native-paper@^4.12.5:[m
+     color "^3.1.2"[m
+     react-native-iphone-x-helper "^1.3.1"[m
+ [m
+[31m-react-native-reanimated@^2.11.0:[m
+[31m-  version "2.11.0"[m
+[31m-  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.11.0.tgz#415ef668440d1b7d8b2b36a20342b1035432dd80"[m
+[31m-  integrity sha512-/QnujrXSNyXasv7v8K3eu5Z4XGRYMPRa0+x0RjNr6Z5/KEuPHwrg1Xm7UZ2YSm6jCF2b1BW6ceqP/1d626gvhQ==[m
+[31m-  dependencies:[m
+[31m-    "@babel/plugin-transform-object-assign" "^7.16.7"[m
+[31m-    "@babel/preset-typescript" "^7.16.7"[m
+[31m-    "@types/invariant" "^2.2.35"[m
+[31m-    invariant "^2.2.4"[m
+[31m-    lodash.isequal "^4.5.0"[m
+[31m-    setimmediate "^1.0.5"[m
+[31m-    string-hash-64 "^1.0.3"[m
+[31m-[m
+ react-native-safe-area-context@^4.4.1:[m
+   version "4.4.1"[m
+   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.4.1.tgz#239c60b8a9a80eac70a38a822b04c0f1d15ffc01"[m
+[36m@@ -6361,11 +6293,6 @@[m [mset-value@^2.0.0, set-value@^2.0.1:[m
+     is-plain-object "^2.0.3"[m
+     split-string "^3.0.1"[m
+ [m
+[31m-setimmediate@^1.0.5:[m
+[31m-  version "1.0.5"[m
+[31m-  resolved "https://registry.yarnpkg.com/setimmediate/-/setimmediate-1.0.5.tgz#290cbb232e306942d7d7ea9b83732ab7856f8285"[m
+[31m-  integrity sha512-MATJdZp8sLqDl/68LfQmbP8zKPLQNV6BIZoIgrscFDQ+RsvK/BxeDQOgyxKKoh0y/8h3BqVFnCqQ/gd+reiIXA==[m
+[31m-[m
+ setprototypeof@1.2.0:[m
+   version "1.2.0"[m
+   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.2.0.tgz#66c9a24a73f9fc28cbe66b09fed3d33dcaf1b424"[m
+[36m@@ -6615,11 +6542,6 @@[m [mstrict-uri-encode@^2.0.0:[m
+   resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-2.0.0.tgz#b9c7330c7042862f6b142dc274bbcc5866ce3546"[m
+   integrity sha512-QwiXZgpRcKkhTj2Scnn++4PKtWsH0kpzZ62L2R6c/LUVYv7hVnZqcg2+sMuT6R7Jusu1vviK/MFsu6kNJfWlEQ==[m
+ [m
+[31m-string-hash-64@^1.0.3:[m
+[31m-  version "1.0.3"[m
+[31m-  resolved "https://registry.yarnpkg.com/string-hash-64/-/string-hash-64-1.0.3.tgz#0deb56df58678640db5c479ccbbb597aaa0de322"[m
+[31m-  integrity sha512-D5OKWKvDhyVWWn2x5Y9b+37NUllks34q1dCDhk/vYcso9fmhs+Tl3KR/gE4v5UNj2UA35cnX4KdVVGkG1deKqw==[m
+[31m-[m
+ string-length@^4.0.1:[m
+   version "4.0.2"[m
+   resolved "https://registry.yarnpkg.com/string-length/-/string-length-4.0.2.tgz#a8a8dc7bd5c1a82b9b3c8b87e125f66871b6e57a"[m

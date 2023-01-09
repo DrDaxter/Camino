@@ -5,22 +5,24 @@ type fonts = 'Roboto-Medium' | 'Roboto-Bold'
 type TextAlign = 'center'|'flex-start'|'flex-end'
 interface Props{
     text:string
-    font?:fonts
     color?:string
-    size?:number,
-    align?:TextAlign
+    size?:number
+    marginVertical?:number
+    font?:fonts
+    align?:TextAlign,
 }
 export const Titles = ({
     text,
     font="Roboto-Medium",
     color="#000",
     size=20,
-    align="center"
+    align="center",
+    marginVertical=10
 }:Props) => {
   return (
     <View
         style={{
-            marginVertical:10,
+            marginVertical,
             alignItems:align
         }}
     >
