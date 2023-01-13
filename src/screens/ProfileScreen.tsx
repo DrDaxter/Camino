@@ -1,12 +1,10 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect,useState } from 'react'
-import { StyleSheet, Text, View, FlatList, Image, Modal, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Image, Modal, TouchableOpacity, StatusBar } from 'react-native'
 import { UserListData } from '../components/UserListData'
-import { firebase } from '../hooks/firebase/firebase'
 import { Data, DataStructure } from '../utils/AccountItems'
 import { AuthHook } from '../hooks/firebase/AuthHook'
 import { LoginComponent } from '../components/LoginComponent'
-import Icon from 'react-native-vector-icons/Ionicons'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { Colors } from '../theme/Colors'
 
@@ -57,12 +55,15 @@ export const ProfileScreen = ({navigation}:Props) => {
   
   return (
     <View style={styles.mainContent}>
+      <StatusBar
+        animated={true}
+        backgroundColor={Colors.primary}/>
       <Modal
         transparent={true}
         visible={!user && showLoginModal}
       >
-        <View style={styles.loginModal}>
-          <TouchableOpacity
+        {/* <View style={styles.loginModal}> */}
+          {/* <TouchableOpacity
             style={styles.closeLoginModal}
             onPress={() => setShowLoginModal(false)}
           >
@@ -70,9 +71,9 @@ export const ProfileScreen = ({navigation}:Props) => {
                 name='close'
                 color="#000"
                 size={35}/>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <LoginComponent />
-        </View>
+        {/* </View> */}
       </Modal>
 
       <View style={styles.useInformationContent}>

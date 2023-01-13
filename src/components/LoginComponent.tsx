@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import {Dimensions, StyleSheet, Text, View, Image, Button, TouchableOpacity} from 'react-native'
+import {Dimensions, StyleSheet, View} from 'react-native'
 import { AuthHook } from '../hooks/firebase/AuthHook'
 import { SignSocialNetworksComponent } from './SignSocialNetworksComponent'
 import { Titles } from '../utils/Titles'
 import { firebase } from '../hooks/firebase/firebase'
 import { SimpleLoader } from '../utils/SimpleLoader'
 import { Colors } from '../theme/Colors'
+import { LoginForm } from './forms/LoginForm'
 
 const screenWidth = Dimensions.get('screen').width
 export const LoginComponent = () => {
@@ -34,47 +35,41 @@ export const LoginComponent = () => {
     
   return (
     <View style={styles.mainContent}>
-        <SimpleLoader 
-          visible={showLoader}
-          color={Colors.primary}
+      <SimpleLoader 
+        visible={showLoader}
+        color={Colors.primary}
+      />
+      <View style={styles.bodyContainer}>
+        <Titles 
+          text="Inicia Sesion"
+          color={Colors.white1}
+          size={35}
+          font="Roboto-Bold"
         />
-        {/* <View style={styles.logoContent}>
-          <Image 
-            source={require('../assets/images/truck_gps.png')}
-            style={{ width:250, height:250}}
-          />
-        </View> */}
-        <View style={styles.bodyContainer}>
-          <Titles 
-            text="Inicia Sesion"
-            color={Colors.white1}
-            size={35}
-            font="Roboto-Bold"
-          />
-          <Titles 
-            text="Disfruta de nuestro servicios"
-            color={Colors.white1}
-            font="Roboto-Medium"
-            marginVertical={0}
-          />
-        </View>
-        <View style={styles.btnSocialLogin}>
-          <SignSocialNetworksComponent 
-            imagePath={require('../assets/images/google_icon.png')}
-            title="Iniciar Sesión con GOOGLE"
-            btnColor="#4285f4"
-            authFunction={googleAuthAction}
-          />
-        </View>
+        <Titles 
+          text="Disfruta de nuestro servicios"
+          color={Colors.white1}
+          font="Roboto-Medium"
+          marginVertical={0}
+        />
+      </View>
+      <View style={styles.formsLoginContent}>
+        <LoginForm />
+        <SignSocialNetworksComponent 
+          imagePath={require('../assets/images/google_icon.png')}
+          title="Iniciar Sesión con GOOGLE"
+          btnColor="#4285f4"
+          authFunction={googleAuthAction}
+        />
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
     mainContent:{
+      flex:1,
       flexDirection:'column',
-      width:400,
-      height:'90%',
       backgroundColor:Colors.primary,
     },
     logoContent:{
@@ -93,9 +88,11 @@ const styles = StyleSheet.create({
       fontSize:19,
       marginVertical:5
     },
-    btnSocialLogin:{
+    formsLoginContent:{
       flex:1,
       backgroundColor:Colors.white2,
-      justifyContent:'flex-end'
+      borderTopRightRadius:10,
+      borderTopLeftRadius:10,
+      paddingHorizontal:10,
     }
 })
