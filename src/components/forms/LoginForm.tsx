@@ -3,6 +3,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { StyleSheet, Text, TextInput, View } from 'react-native'
 import { Colors } from '../../theme/Colors'
 import { Titles } from '../../utils/Titles'
+import { InputLable } from '../../utils/InputLable'
 
 interface formProps{
     email:string,
@@ -25,25 +26,16 @@ export const LoginForm = () => {
     }
 
   return (
-    <View>
-        <Titles 
-            text="Email"
-            color={Colors.black1}
-            size={15}
-            align="flex-start"
-            marginVertical={0}
-        />
+    <View style={styles.formContent}>
         <Controller 
             control={control}
             rules={{required:true}}
             render={({field:{onChange,onBlur,value}})=>(
-                <TextInput 
-                    style={styles.input}
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    placeholder="example@email.com"
-                />
+                <View>
+                    <InputLable 
+                        label="Email"
+                    />
+                </View>
             )}
             name="email"
         />
@@ -59,19 +51,8 @@ export const LoginForm = () => {
             }}
             render={({field:{onChange,onBlur,value}}) => (
                 <View>
-                    <Titles 
-                        text="Contraseña"
-                        color={Colors.black1}
-                        size={15}
-                        align="flex-start"
-                        marginVertical={0}
-                    />
-                    <TextInput 
-                        style={styles.input}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        textContentType="password"
+                    <InputLable 
+                        label="Password"
                     />
                 </View>
             )}
@@ -83,8 +64,10 @@ export const LoginForm = () => {
 }
 
 const styles = StyleSheet.create({
-    input: {
+    formContent:{
         
+    },
+    input: {
         color:Colors.black1,
         borderBottomWidth:1,
         borderColor: Colors.black2,

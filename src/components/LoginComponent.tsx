@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     },
     formsLoginContent:{
       flex:1,
+      justifyContent:"center",
       backgroundColor:Colors.white2,
       borderTopRightRadius:10,
       borderTopLeftRadius:10,
