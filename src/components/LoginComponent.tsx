@@ -55,12 +55,15 @@ export const LoginComponent = () => {
       </View>
       <View style={styles.formsLoginContent}>
         <LoginForm />
-        <SignSocialNetworksComponent 
-          imagePath={require('../assets/images/google_icon.png')}
-          title="Iniciar Sesión con GOOGLE"
-          btnColor="#4285f4"
-          authFunction={googleAuthAction}
-        />
+
+        <View>
+          <SignSocialNetworksComponent 
+            imagePath={require('../assets/images/google_icon.png')}
+            title="Iniciar Sesión con GOOGLE"
+            btnColor="#4285f4"
+            authFunction={googleAuthAction}
+          />
+        </View>
       </View>
     </View>
   )

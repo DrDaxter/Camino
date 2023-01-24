@@ -7,7 +7,8 @@ type Props = React.ComponentProps<typeof TextInput> & {
 }
 
 export const InputLable: React.FC<Props> = (props) => {
-    const {label,
+    const {
+        label,
         style,
         value,
         onBlur,
@@ -15,13 +16,14 @@ export const InputLable: React.FC<Props> = (props) => {
         ...restOfProps
     } = props
     const [isFocused, setIsFocused] = useState(false)
+    const [text, setText] = useState("")
     const focusAnim = useRef(new Animated.Value(0)).current
 
     useEffect(() => {
       Animated.timing(
         focusAnim,
         {
-            toValue: isFocused ? 1 : 0,
+            toValue: isFocused || !!text ? 1 : 0,
             duration:150,
             useNativeDriver:true,
             easing: Easing.bezier(0.4,0,0.2,1)
@@ -42,7 +44,9 @@ export const InputLable: React.FC<Props> = (props) => {
             }}
             style={[style, styles.input]} 
             {...restOfProps} 
-            
+            onChangeText={text => setText(text)}
+            onChange={()=> console.log(text)}
+
         />
         <Animated.View 
             style={{
@@ -98,9 +102,9 @@ const styles = StyleSheet.create({
       padding: 24,
       borderColor: '#B9C4CA',
       borderWidth: 1,
-      borderRadius: 4,
+      borderRadius: 2,
       fontFamily: 'Avenir-Medium',
-      fontSize: 16,
+      fontSize: 13,
       color:Colors.black1
     }
   })

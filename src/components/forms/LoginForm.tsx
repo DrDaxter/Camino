@@ -2,7 +2,6 @@ import React from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { StyleSheet, Text, TextInput, View } from 'react-native'
 import { Colors } from '../../theme/Colors'
-import { Titles } from '../../utils/Titles'
 import { InputLable } from '../../utils/InputLable'
 
 interface formProps{
@@ -27,38 +26,41 @@ export const LoginForm = () => {
 
   return (
     <View style={styles.formContent}>
-        <Controller 
-            control={control}
-            rules={{required:true}}
-            render={({field:{onChange,onBlur,value}})=>(
-                <View>
-                    <InputLable 
-                        label="Email"
-                    />
-                </View>
-            )}
-            name="email"
-        />
-        {errorText(errors.email?.type,"Email")}
+        <View>
+            <Controller 
+                control={control}
+                rules={{required:true}}
+                render={({field:{onChange,onBlur,value}})=>(
+                    <View>
+                        <InputLable 
+                            label="Email"
+                        />
+                    </View>
+                )}
+                name="email"
+            />
+            {errorText(errors.email?.type,"Email")}
+        </View>
         
         
-
-        <Controller 
-            control={control}
-            rules={{
-                required:true,
-                maxLength:20
-            }}
-            render={({field:{onChange,onBlur,value}}) => (
-                <View>
-                    <InputLable 
-                        label="Password"
-                    />
-                </View>
-            )}
-            name="password"
-        />
-        {errorText(errors.password?.type,"Contraseña")}
+        <View style={styles.inputContentGeneral}>
+            <Controller 
+                control={control}
+                rules={{
+                    required:true,
+                    maxLength:20
+                }}
+                render={({field:{onChange,onBlur,value}}) => (
+                    <View>
+                        <InputLable 
+                            label="Password"
+                        />
+                    </View>
+                )}
+                name="password"
+            /> 
+            {errorText(errors.password?.type,"Contraseña")}
+        </View>
     </View>
   )
 }
@@ -66,6 +68,9 @@ export const LoginForm = () => {
 const styles = StyleSheet.create({
     formContent:{
         
+    },
+    inputContentGeneral:{
+        marginVertical:15,
     },
     input: {
         color:Colors.black1,
