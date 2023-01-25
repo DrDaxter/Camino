@@ -2,19 +2,20 @@ import React,{useState,useRef,useEffect} from 'react'
 import {StyleSheet,View,TextInput,Text,Animated, Easing} from 'react-native'
 import { Colors } from '../theme/Colors'
 
-type Props = React.ComponentProps<typeof TextInput> & {
-    label:string
+interface Props {
+    label:string,
+    value?:string,
+    onValueChange?: (value: string) => void,
+    onBlurChange?: (e: FocusEvent) => void
 }
 
-export const InputLable: React.FC<Props> = (props) => {
-    const {
-        label,
-        style,
-        value,
-        onBlur,
-        onFocus,
-        ...restOfProps
-    } = props
+export const InputLable = ({
+    label,
+    value,
+    onValueChange = ()=> {},
+    onBlurChange = ()=>{}
+}:Props) => {
+
     const [isFocused, setIsFocused] = useState(false)
     const [text, setText] = useState("")
     const focusAnim = useRef(new Animated.Value(0)).current
@@ -29,24 +30,24 @@ export const InputLable: React.FC<Props> = (props) => {
             easing: Easing.bezier(0.4,0,0.2,1)
         }
       ).start()
-    }, [focusAnim,isFocused,value])
+    }, [focusAnim,isFocused,text])
     
   return (
-    <View style={style}>
+    <View >
         <TextInput 
             onBlur={(event) => {
+                onBlurChange(event)
                 setIsFocused(false)
-                onBlur?.(event)
             }}
             onFocus={(event) => {
                 setIsFocused(true)
-                onFocus?.(event)
             }}
-            style={[style, styles.input]} 
-            {...restOfProps} 
-            onChangeText={text => setText(text)}
-            onChange={()=> console.log(text)}
-
+            style={[styles.input]} 
+            onChangeText={(text) =>{
+                onValueChange(text)
+                setText(text)
+            }}
+            value={value}
         />
         <Animated.View 
             style={{

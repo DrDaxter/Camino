@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { Colors } from '../../theme/Colors'
 import { InputLable } from '../../utils/InputLable'
 
@@ -24,8 +24,9 @@ export const LoginForm = () => {
         }
     }
 
+
   return (
-    <View style={styles.formContent}>
+    <ScrollView style={styles.formContent}>
         <View>
             <Controller 
                 control={control}
@@ -34,12 +35,15 @@ export const LoginForm = () => {
                     <View>
                         <InputLable 
                             label="Email"
+                            value={value}
+                            onValueChange={onChange}
+                            onBlurChange={onBlur}
                         />
                     </View>
                 )}
                 name="email"
             />
-            {errorText(errors.email?.type,"Email")}
+            {errors.email && <Text>This is required.</Text>}
         </View>
         
         
@@ -54,6 +58,9 @@ export const LoginForm = () => {
                     <View>
                         <InputLable 
                             label="Password"
+                            value={value}
+                            onValueChange={onChange}
+                            onBlurChange={onBlur}
                         />
                     </View>
                 )}
@@ -61,7 +68,7 @@ export const LoginForm = () => {
             /> 
             {errorText(errors.password?.type,"Contraseña")}
         </View>
-    </View>
+    </ScrollView>
   )
 }
 
