@@ -4,15 +4,15 @@ import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { Colors } from '../../theme/Colors'
 import { InputLable } from '../../utils/InputLable'
 
-interface formProps{
-    email:string,
-    password:string
+export type formProps = {
+    email:'email',
+    password:'password'
 }
 export const LoginForm = () => {
     const {control,handleSubmit,formState:{errors}} = useForm<formProps>()
-    const onSubmit = handleSubmit((data) => {
+    /* const onSubmit = handleSubmit((data) => {
         console.log(data)
-    })
+    }) */
 
     const errorText = (type:string|undefined,control:string) => {
         if(type === "required"){
@@ -27,46 +27,19 @@ export const LoginForm = () => {
 
   return (
     <ScrollView style={styles.formContent}>
-        <View>
-            <Controller 
+        <View style={styles.inputContentGeneral}>
+            <InputLable 
                 control={control}
-                rules={{required:true}}
-                render={({field:{onChange,onBlur,value}})=>(
-                    <View>
-                        <InputLable 
-                            label="Email"
-                            value={value}
-                            onValueChange={onChange}
-                            onBlurChange={onBlur}
-                        />
-                    </View>
-                )}
                 name="email"
+                label="Email"
+                rules={{
+                    required: true,
+                }}
             />
-            {errors.email && <Text>This is required.</Text>}
         </View>
         
-        
         <View style={styles.inputContentGeneral}>
-            <Controller 
-                control={control}
-                rules={{
-                    required:true,
-                    maxLength:20
-                }}
-                render={({field:{onChange,onBlur,value}}) => (
-                    <View>
-                        <InputLable 
-                            label="Password"
-                            value={value}
-                            onValueChange={onChange}
-                            onBlurChange={onBlur}
-                        />
-                    </View>
-                )}
-                name="password"
-            /> 
-            {errorText(errors.password?.type,"Contraseña")}
+            
         </View>
     </ScrollView>
   )
