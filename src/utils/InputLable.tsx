@@ -39,7 +39,8 @@ export const InputLable = ({
         <Controller 
             control={control}
             rules={{
-                maxLength:10
+                maxLength:10,
+                required:true
                }}
             render={({field:{onChange,onBlur,value}, fieldState: {error}})=>(
                 <View>
