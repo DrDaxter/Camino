@@ -1,7 +1,6 @@
 import React,{useState,useRef,useEffect} from 'react'
 import {StyleSheet,View,TextInput,Text,Animated, Easing} from 'react-native'
 import { Colors } from '../theme/Colors'
-import { formProps } from '../components/forms/LoginForm';
 
 interface Props {
     label:string,
@@ -18,7 +17,6 @@ export const InputLable = ({
 }:Props) => {
 
     const [isFocused, setIsFocused] = useState(false)
-    const [text, setText] = useState("")
     const focusAnim = useRef(new Animated.Value(0)).current
 
     useEffect(() => {
@@ -85,8 +83,8 @@ export const InputLable = ({
 const styles = StyleSheet.create({
     labelContainer: {
         position: 'absolute',
-        left: 16,
-        top: -6,
+        left: 10,
+        top: -4,
         paddingHorizontal: 8,
         backgroundColor: Colors.white2,
     },
@@ -96,12 +94,15 @@ const styles = StyleSheet.create({
         color:Colors.black1
     },
     input: {
-      padding: 24,
-      borderColor: '#B9C4CA',
-      borderWidth: 1,
-      borderRadius: 2,
-      fontFamily: 'Avenir-Medium',
-      fontSize: 13,
-      color:Colors.black1
+        paddingLeft:15,
+        paddingRight:24,
+        paddingTop:24,
+        paddingBottom: 5,
+        borderColor: '#B9C4CA',
+        borderWidth: 1,
+        borderRadius: 2,
+        fontFamily: 'Avenir-Medium',
+        fontSize: 13,
+        color:Colors.black1
     }
   })

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Dimensions, StyleSheet, View} from 'react-native'
+import {Dimensions, StatusBar, StyleSheet, View} from 'react-native'
 import { AuthHook } from '../hooks/firebase/AuthHook'
 import { SignSocialNetworksComponent } from './SignSocialNetworksComponent'
 import { Titles } from '../utils/Titles'
@@ -8,7 +8,6 @@ import { SimpleLoader } from '../utils/SimpleLoader'
 import { Colors } from '../theme/Colors'
 import { LoginForm } from './forms/LoginForm'
 
-const screenWidth = Dimensions.get('screen').width
 export const LoginComponent = () => {
   const [showLoader, setShowLoader] = useState(false)
   const {saveData} = firebase()
@@ -35,11 +34,16 @@ export const LoginComponent = () => {
     
   return (
     <View style={styles.mainContent}>
+      <StatusBar
+       hidden={true}
+       
+      />
+
       <SimpleLoader 
         visible={showLoader}
         color={Colors.primary}
       />
-      <View style={styles.bodyContainer}>
+      <View style={styles.headersContainer}>
         <Titles 
           text="Inicia Sesion"
           color={Colors.white1}
@@ -79,9 +83,9 @@ const styles = StyleSheet.create({
       justifyContent:'center',
       alignItems:'center'
     },
-    bodyContainer:{
+    headersContainer:{
       alignItems:'flex-start',
-      height:200,
+      height:'50%',
       marginVertical:15,
       paddingHorizontal:10
     },

@@ -1,14 +1,10 @@
 import React from 'react'
-import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
-import { Formik, Form, Field } from 'formik'
+import { StyleSheet, Text, View } from 'react-native'
+import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { Colors } from '../../theme/Colors'
 import { InputLable } from '../../utils/InputLable'
 
-export type formProps = {
-    email:'email',
-    password:'password'
-}
 export const LoginForm = () => {
 
     const signupSchema = Yup.object().shape({
@@ -16,7 +12,7 @@ export const LoginForm = () => {
         password: Yup.string().max(10,"too long").required('Required')
     })
   return (
-    <ScrollView style={styles.formContent}>
+    <View style={styles.formContent}>
         <Formik
             initialValues={{email:'',password:''}}
             onSubmit={({email,password}) => {
@@ -45,7 +41,7 @@ export const LoginForm = () => {
             </View>
         )}
         </Formik>
-    </ScrollView>
+    </View>
   )
 }
 

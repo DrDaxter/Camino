@@ -55,9 +55,6 @@ export const ProfileScreen = ({navigation}:Props) => {
   
   return (
     <View style={styles.mainContent}>
-      <StatusBar
-        animated={true}
-        backgroundColor={Colors.primary}/>
       <Modal
         transparent={true}
         visible={!user && showLoginModal}
