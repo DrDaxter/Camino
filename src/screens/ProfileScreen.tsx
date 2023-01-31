@@ -55,22 +55,13 @@ export const ProfileScreen = ({navigation}:Props) => {
   
   return (
     <View style={styles.mainContent}>
+      <StatusBar hidden={true} />
       <Modal
         transparent={true}
+        statusBarTranslucent
         visible={!user && showLoginModal}
       >
-        {/* <View style={styles.loginModal}> */}
-          {/* <TouchableOpacity
-            style={styles.closeLoginModal}
-            onPress={() => setShowLoginModal(false)}
-          >
-            <Icon 
-                name='close'
-                color="#000"
-                size={35}/>
-          </TouchableOpacity> */}
-          <LoginComponent />
-        {/* </View> */}
+        <LoginComponent />
       </Modal>
 
       <View style={styles.useInformationContent}>

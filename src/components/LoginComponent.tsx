@@ -34,10 +34,6 @@ export const LoginComponent = () => {
     
   return (
     <View style={styles.mainContent}>
-      <StatusBar
-       hidden={true}
-       
-      />
 
       <SimpleLoader 
         visible={showLoader}
@@ -77,7 +73,8 @@ const styles = StyleSheet.create({
     mainContent:{
       flex:1,
       flexDirection:'column',
-      backgroundColor:Colors.primary,
+      backgroundColor:Colors.primary_dark,
+      paddingTop:5
     },
     logoContent:{
       justifyContent:'center',
@@ -90,7 +87,7 @@ const styles = StyleSheet.create({
       paddingHorizontal:10
     },
     loginSubtitle:{
-      color:'#000',
+      color:Colors.white1,
       fontFamily:'Roboto-Regular',
       fontSize:19,
       marginVertical:5
