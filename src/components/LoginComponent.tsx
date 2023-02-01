@@ -34,7 +34,6 @@ export const LoginComponent = () => {
     
   return (
     <View style={styles.mainContent}>
-
       <SimpleLoader 
         visible={showLoader}
         color={Colors.primary}
@@ -55,12 +54,16 @@ export const LoginComponent = () => {
       </View>
       <View style={styles.formsLoginContent}>
         <LoginForm />
-
-        <View>
+        <View style={styles.socialLoginContent}>
           <SignSocialNetworksComponent 
-            imagePath={require('../assets/images/google_icon.png')}
-            title="Iniciar Sesión con GOOGLE"
-            btnColor="#4285f4"
+            imagePath={require('../assets/images/google_black_icon.png')}
+            btnColor="#D0021B"
+            authFunction={googleAuthAction}
+          />
+
+          <SignSocialNetworksComponent 
+            imagePath={require('../assets/images/facebook_black_logo.png')}
+            btnColor="#475993"
             authFunction={googleAuthAction}
           />
         </View>
@@ -94,10 +97,14 @@ const styles = StyleSheet.create({
     },
     formsLoginContent:{
       flex:1,
-      justifyContent:"center",
+      justifyContent:"flex-start",
       backgroundColor:Colors.white2,
       borderTopRightRadius:10,
       borderTopLeftRadius:10,
       paddingHorizontal:10,
+    },
+    socialLoginContent:{
+      flexDirection:"row",
+      justifyContent:'center'
     }
 })

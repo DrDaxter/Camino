@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-type fonts = 'Roboto-Medium' | 'Roboto-Bold'
+type fonts = 'Roboto-Medium' | 'Roboto-Bold' | 'Roboto-Regular'
 type TextAlign = 'center'|'flex-start'|'flex-end'
 interface Props{
     text:string
