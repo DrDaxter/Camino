@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect,useState } from 'react'
-import { StyleSheet, Text, View, FlatList, Image, Modal, TouchableOpacity, StatusBar } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Image, Modal, StatusBar } from 'react-native'
 import { UserListData } from '../components/UserListData'
 import { Data, DataStructure } from '../utils/AccountItems'
 import { AuthHook } from '../hooks/firebase/AuthHook'
@@ -61,7 +61,9 @@ export const ProfileScreen = ({navigation}:Props) => {
         statusBarTranslucent
         visible={!user && showLoginModal}
       >
-        <LoginComponent />
+        <LoginComponent 
+          onHidden={(hide) => setShowLoginModal(hide)}
+        />
       </Modal>
 
       <View style={styles.useInformationContent}>

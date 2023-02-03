@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import {Dimensions, StatusBar, StyleSheet, View} from 'react-native'
+import React, { useState, useEffect, useRef } from 'react'
+import {Dimensions, StatusBar, StyleSheet, TouchableOpacity, View, Animated} from 'react-native'
 import { AuthHook } from '../hooks/firebase/AuthHook'
 import { SignSocialNetworksComponent } from './SignSocialNetworksComponent'
 import { Titles } from '../utils/Titles'
@@ -7,9 +7,15 @@ import { firebase } from '../hooks/firebase/firebase'
 import { SimpleLoader } from '../utils/SimpleLoader'
 import { Colors } from '../theme/Colors'
 import { LoginForm } from './forms/LoginForm'
+import Icon from 'react-native-vector-icons/Ionicons'
 
-export const LoginComponent = () => {
+interface Props{
+  onHidden:(hide:boolean) => void
+}
+export const LoginComponent = ({onHidden}:Props) => {
   const [showLoader, setShowLoader] = useState(false)
+  const positionAnimation = useRef(new Animated.Value(-750)).current
+  const opacity = useRef(new Animated.Value(0)).current
   const {saveData} = firebase()
   const {signWithGoogle} = AuthHook()
 
@@ -31,14 +37,58 @@ export const LoginComponent = () => {
       throw new Error(`Error found in loginComponent ${error}`);
     })
   }
+
+  useEffect(() => {
+    Animated.timing(
+      positionAnimation,
+      {
+        toValue:0,
+        duration:5000,
+        useNativeDriver:true
+      }
+    ).start()
+    Animated.timing(
+      opacity,
+      {
+        toValue:1,
+        duration:500,
+        useNativeDriver:true
+      }
+    ).start()
+  }, [])
+  
     
   return (
-    <View style={styles.mainContent}>
+    <Animated.View style={{
+        ...styles.mainContent,
+        
+        transform: [{
+          translateY: positionAnimation
+        }]
+      }}>
       <SimpleLoader 
         visible={showLoader}
         color={Colors.primary}
       />
-      <View style={styles.headersContainer}>
+      <View style={styles.subHeaderContent}>
+        <TouchableOpacity
+          onPress={() => onHidden(false)}
+        >
+          <View style={{flexDirection:"row",alignItems:"center"}}>
+            <Icon 
+              name="arrow-back-outline"
+              color={Colors.white1}
+              size={35}
+            />
+            <Titles
+              text="Quiza Luego"
+              color={Colors.white1}
+              font="Roboto-Medium"
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
+      {/* <View style={styles.headersContainer}>
         <Titles 
           text="Inicia Sesion"
           color={Colors.white1}
@@ -67,8 +117,19 @@ export const LoginComponent = () => {
             authFunction={googleAuthAction}
           />
         </View>
-      </View>
-    </View>
+      </View> */}
+      <Icon 
+        name="search-outline"
+        size={25}
+        color={Colors.white1}
+        style={{
+          position:"absolute",
+          bottom:0,
+          marginHorizontal:10,
+          marginVertical:10
+        }}
+      />
+    </Animated.View>
   )
 }
 
@@ -79,6 +140,11 @@ const styles = StyleSheet.create({
       backgroundColor:Colors.primary_dark,
       paddingTop:5
     },
+    subHeaderContent:{
+      width:"100%",
+      height:90,
+      justifyContent:"flex-end"
+    },
     logoContent:{
       justifyContent:'center',
       alignItems:'center'
@@ -87,9 +153,7 @@ const styles = StyleSheet.create({
       alignItems:'flex-start',
       justifyContent:'center',
       height:'30%',
-      marginVertical:15,
       paddingHorizontal:15,
-      
     },
     loginSubtitle:{
       color:Colors.white1,
