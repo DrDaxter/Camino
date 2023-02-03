@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         width:'100%',
         alignItems:'center',
         justifyContent:'center',
-        borderWidth:1.5,
+        borderWidth:1,
         borderRadius:3,
     },
     imageSeccion:{

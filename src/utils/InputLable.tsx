@@ -1,5 +1,5 @@
 import React,{useState,useRef,useEffect} from 'react'
-import {StyleSheet,View,TextInput,Text,Animated, Easing} from 'react-native'
+import {StyleSheet,View,TextInput,Text,Animated, Easing, TouchableWithoutFeedback} from 'react-native'
 import { Colors } from '../theme/Colors'
 
 interface Props {
@@ -18,6 +18,7 @@ export const InputLable = ({
 
     const [isFocused, setIsFocused] = useState(false)
     const focusAnim = useRef(new Animated.Value(0)).current
+    const inputRef = useRef<TextInput>(null)
 
     useEffect(() => {
       Animated.timing(
@@ -35,7 +36,10 @@ export const InputLable = ({
 
     <View>
         <TextInput 
-        style={styles.input}
+        style={{
+            ...styles.input,
+            borderColor: isFocused ? Colors.black1 : Colors.gray2
+        }}
         onChangeText={onValueChange}
             onFocus={() => setIsFocused(true)}
             onBlur={(e) => {
@@ -43,6 +47,7 @@ export const InputLable = ({
                 setIsFocused(false)
             }}
             value={value}
+            ref={inputRef}
         />
         <Animated.View 
             style={{
@@ -60,21 +65,22 @@ export const InputLable = ({
                         outputRange:[24,-12]
                     })
                 },
-                {
-                    translateX:focusAnim.interpolate({
-                        inputRange:[0,1],
-                        outputRange:[16,0]
-                    })
-                }
+                //se removio el translate X
             ]
             }}
         >
-            <Animated.Text style={{
-                ...styles.label, 
-                color: isFocused ? '#080F9C' : '#B9C4CA'
-                }}>
-                {label}
-            </Animated.Text>
+            <TouchableWithoutFeedback
+                onPress={() => inputRef.current?.focus()}
+            >
+                <Animated.Text style={{
+                    ...styles.label, 
+                    color: isFocused ? '#080F9C' : '#B9C4CA'
+                    }}
+                    
+                    >
+                    {label}
+                </Animated.Text>
+            </TouchableWithoutFeedback>
         </Animated.View>
     </View>
   )
@@ -98,7 +104,6 @@ const styles = StyleSheet.create({
         paddingRight:24,
         paddingTop:24,
         paddingBottom: 5,
-        borderColor: '#B9C4CA',
         borderWidth: 1,
         borderRadius: 2,
         fontFamily: 'Avenir-Medium',

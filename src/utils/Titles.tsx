@@ -10,6 +10,7 @@ interface Props{
     marginVertical?:number
     font?:fonts
     align?:TextAlign,
+    underLine?:boolean
 }
 export const Titles = ({
     text,
@@ -17,7 +18,8 @@ export const Titles = ({
     color="#000",
     size=20,
     align="center",
-    marginVertical=10
+    marginVertical=10,
+    underLine = false
 }:Props) => {
   return (
     <View
@@ -30,7 +32,8 @@ export const Titles = ({
             style={{
                 fontFamily:font,
                 color:color,
-                fontSize:size
+                fontSize:size,
+                textDecorationLine: underLine ? "underline" : "none"
             }}
         >
             {text}

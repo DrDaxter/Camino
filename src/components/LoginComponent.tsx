@@ -85,9 +85,11 @@ const styles = StyleSheet.create({
     },
     headersContainer:{
       alignItems:'flex-start',
-      height:'50%',
+      justifyContent:'center',
+      height:'30%',
       marginVertical:15,
-      paddingHorizontal:10
+      paddingHorizontal:15,
+      
     },
     loginSubtitle:{
       color:Colors.white1,
@@ -97,14 +99,15 @@ const styles = StyleSheet.create({
     },
     formsLoginContent:{
       flex:1,
-      justifyContent:"flex-start",
+      justifyContent:"center",
       backgroundColor:Colors.white2,
-      borderTopRightRadius:10,
-      borderTopLeftRadius:10,
+      
+      borderTopLeftRadius:100,
       paddingHorizontal:10,
     },
     socialLoginContent:{
       flexDirection:"row",
-      justifyContent:'center'
+      justifyContent:'center',
+      marginVertical:15
     }
 })

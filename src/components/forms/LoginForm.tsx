@@ -28,8 +28,8 @@ export const LoginForm = () => {
             values,
             isValid,
             touched,
+            dirty,
             errors,
-            resetForm,
         }) => (
             <View>
                 <View style={styles.inputContentGeneral}>
@@ -52,16 +52,29 @@ export const LoginForm = () => {
                 </View>
                 <View style={{alignItems:"center"}}>
                     <TouchableOpacity
-                        style={{width:"90%",height:100}}
+                        style={{width:"90%",height:55}}
+                        disabled={!(isValid && dirty)}
+                        onPress={() => console.log(dirty)}
                     >
-                        <View style={styles.buttonSignInContent}>
+                        <View style={{
+                                ...styles.buttonSignInContent,
+                                borderColor: (isValid && dirty)
+                                    ? Colors.primary_dark : Colors.gray2
+                            }}>
                             <Titles 
                                 text="Ingresar"
-                                color={Colors.black1}
+                                color={(isValid && dirty) ? Colors.primary_dark : Colors.gray2}
                                 font="Roboto-Regular"
                             />
                         </View>
                     </TouchableOpacity>
+                    <Titles 
+                        text="Crear cuenta"
+                        color={Colors.primary_light}
+                        marginVertical={0}
+                        font="Roboto-Regular"
+                        underLine
+                    />
                 </View>
             </View>
         )}
@@ -84,9 +97,8 @@ const styles = StyleSheet.create({
     },
     buttonSignInContent:{
         width:'100%',
-        height:60,
-        borderWidth:1.5,
-        borderColor:Colors.primary_dark,
+        height:'100%',
+        borderWidth:1,
         borderRadius:5
     }
 })
