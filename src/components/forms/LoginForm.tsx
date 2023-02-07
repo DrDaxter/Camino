@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Button, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { Colors } from '../../theme/Colors'
@@ -68,13 +68,18 @@ export const LoginForm = () => {
                             />
                         </View>
                     </TouchableOpacity>
-                    <Titles 
-                        text="Crear cuenta"
-                        color={Colors.primary_light}
-                        marginVertical={0}
-                        font="Roboto-Regular"
-                        underLine
-                    />
+                    <TouchableOpacity
+                        onPress={()=> console.log("crear cuenta")}
+                    >
+                        <Titles 
+                            text="Crear cuenta"
+                            color={Colors.primary_light}
+                            marginVertical={0}
+                            size={15}
+                            font="Roboto-Regular"
+                            underLine
+                        />
+                    </TouchableOpacity>
                 </View>
             </View>
         )}

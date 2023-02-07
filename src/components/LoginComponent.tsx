@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import {Dimensions, StatusBar, StyleSheet, TouchableOpacity, View, Animated} from 'react-native'
+import {Dimensions, StyleSheet, TouchableOpacity, View, Animated} from 'react-native'
 import { AuthHook } from '../hooks/firebase/AuthHook'
 import { SignSocialNetworksComponent } from './SignSocialNetworksComponent'
 import { Titles } from '../utils/Titles'
@@ -64,7 +64,7 @@ export const LoginComponent = ({onHidden}:Props) => {
       formOpacity,
       {
         toValue:1,
-        duration:500,
+        duration:400,
         useNativeDriver:true
       }
     ).start()
@@ -133,17 +133,6 @@ export const LoginComponent = ({onHidden}:Props) => {
           </View>
         </View>
       </Animated.View>
-      <Icon 
-        name="search-outline"
-        size={25}
-        color={Colors.white1}
-        style={{
-          position:"absolute",
-          bottom:0,
-          marginHorizontal:10,
-          marginVertical:10
-        }}
-      />
     </Animated.View>
   )
 }
