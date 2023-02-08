@@ -15,6 +15,7 @@
         android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyA_cbpLMWL34EVZ2zXZWptnMmLnNDn8D-w"
       />
+      <meta-data android:name="com.facebook.sdk.608154224483135" android:value="@string/608154224483135"/><meta-data android:name="com.facebook.sdk.3f6de965d38f53f5ef13f42e321dc7cf" android:value="@string/3f6de965d38f53f5ef13f42e321dc7cf"/>
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
