@@ -67,3 +67,4 @@ buck-out/
 .env
 .env.*
 !.env.template
+android/app/src/main/res/values/strings.xml
