@@ -19,7 +19,7 @@ export const LoginComponent = ({onHidden}:Props) => {
   const opacity = useRef(new Animated.Value(0)).current
   const formOpacity = useRef(new Animated.Value(0)).current
   const {saveData} = firebase()
-  const {signWithGoogle} = AuthHook()
+  const {signWithGoogle,signWithFacebook} = AuthHook()
 
   const googleAuthAction = () => {
     setShowLoader(true)
@@ -128,7 +128,7 @@ export const LoginComponent = ({onHidden}:Props) => {
             <SignSocialNetworksComponent 
               imagePath={require('../assets/images/facebook_black_logo.png')}
               btnColor="#475993"
-              authFunction={googleAuthAction}
+              authFunction={() => signWithFacebook().then(() => console.log('Signed in with Facebook!'))}
             />
           </View>
         </View>
