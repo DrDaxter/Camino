@@ -17,6 +17,8 @@ export const firebase = () => {
   }
 
   const saveData = async (document:any) => {
+    console.log("NEW DOCUMENT")
+    console.log(document)
     const response = await firestore().collection('user')
     .doc(document.uid)
     .set({...document})

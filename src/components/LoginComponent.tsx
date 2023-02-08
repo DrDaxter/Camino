@@ -8,6 +8,8 @@ import { SimpleLoader } from '../utils/SimpleLoader'
 import { Colors } from '../theme/Colors'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { LoginForm } from './forms/LoginForm'
+import { MainUserInformation } from '../interfaces/MainUserInformation'
+import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
 const top = Dimensions.get('screen').height*0.8
 interface Props{
@@ -15,29 +17,44 @@ interface Props{
 }
 export const LoginComponent = ({onHidden}:Props) => {
   const [showLoader, setShowLoader] = useState(false)
+  const [userState, setUserState] = useState<MainUserInformation>()
   const positionAnimation = useRef(new Animated.Value(-top)).current
   const opacity = useRef(new Animated.Value(0)).current
   const formOpacity = useRef(new Animated.Value(0)).current
   const {saveData} = firebase()
   const {signWithGoogle,signWithFacebook} = AuthHook()
 
-  const googleAuthAction = () => {
+  const handleSocialLogin = async(social:string) => {
     setShowLoader(true)
-    signWithGoogle().then(data => {
-      const {user} = data
-      saveData(
-        {
-          "Nombre":user.displayName,
-          "email":user.email,
-          "phone_number":user.phoneNumber,
-          "photo":user.photoURL,
-          "uid":user.uid
-        }
-      ).finally(()=> setShowLoader(false))
-    }).catch(error => {
+    try{
+      let userCredentials: FirebaseAuthTypes.UserCredential
+      switch (social) {
+        case 'google':
+          userCredentials = await signWithGoogle()
+          break;
+        case 'facebook':
+          userCredentials = await signWithFacebook()
+          break;
+      
+        default:
+          break;
+      }
+      console.log("USER DATA",userCredentials!.user)
+      const {user} = userCredentials!
+      saveData({
+        "Nombre":user.displayName,
+        "email":user.email,
+        "phone_number":user.phoneNumber,
+        "photo":user.photoURL,
+        "uid":user.uid
+      })
+    }catch(error) {
       setShowLoader(false)
       throw new Error(`Error found in loginComponent ${error}`);
-    })
+    }
+    finally{
+      setShowLoader(false)
+    }
   }
 
   useEffect(() => {
@@ -122,13 +139,13 @@ export const LoginComponent = ({onHidden}:Props) => {
             <SignSocialNetworksComponent 
               imagePath={require('../assets/images/google_black_icon.png')}
               btnColor="#D0021B"
-              authFunction={googleAuthAction}
+              authFunction={() => handleSocialLogin("google")}
             />
 
             <SignSocialNetworksComponent 
               imagePath={require('../assets/images/facebook_black_logo.png')}
               btnColor="#475993"
-              authFunction={() => signWithFacebook().then(() => console.log('Signed in with Facebook!'))}
+              authFunction={() => handleSocialLogin("facebook")}
             />
           </View>
         </View>
