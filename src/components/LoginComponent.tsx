@@ -127,7 +127,7 @@ export const LoginComponent = ({onHidden}:Props) => {
             font="Roboto-Bold"
           />
           <Titles 
-            text="Disfruta de nuestro servicios"
+            text="Disfruta de nuestros servicios"
             color={Colors.white1}
             font="Roboto-Medium"
             marginVertical={0}
