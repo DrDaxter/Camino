@@ -1,7 +1,3 @@
 <resources>
-    <string name="app_name">camino</string>
-    <string name="facebook_app_id">608154224483135</string>
-    <string name="fb_login_protocol_scheme">fb1234</string>
-    <string name="facebook_client_token">3f6de965d38f53f5ef13f42e321dc7cf</string>
-    <string name="firebase_api_token">AIzaSyA_cbpLMWL34EVZ2zXZWptnMmLnNDn8D-w</string>
+
 </resources>
