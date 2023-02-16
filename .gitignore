@@ -64,7 +64,7 @@ buck-out/
 /index.android.bundle.map
 
 # env
-.env
-.env.*
-!.env.template
+#.env
+#.env.*
+#!.env.template
 android/app/src/main/res/values/secrets.xml
