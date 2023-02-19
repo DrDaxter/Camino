@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { Colors } from '../../theme/Colors'
@@ -7,7 +7,6 @@ import { InputLable } from '../../utils/InputLable'
 import { Titles } from '../../utils/Titles'
 
 export const LoginForm = () => {
-
     const signupSchema = Yup.object().shape({
         email: Yup.string().required('Required'),
         password: Yup.string().max(10,"too long").required('Required')
