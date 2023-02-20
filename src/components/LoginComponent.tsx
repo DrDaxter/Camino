@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { LoginForm } from './forms/LoginForm'
 import { MainUserInformation } from '../interfaces/MainUserInformation'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import { CreateAccountComponent } from './forms/CreateAccountComponent'
 
 const top = Dimensions.get('screen').height*0.8
 interface Props{
@@ -17,10 +18,12 @@ interface Props{
 }
 export const LoginComponent = ({onHidden}:Props) => {
   const [showLoader, setShowLoader] = useState(false)
-  const [userState, setUserState] = useState<MainUserInformation>()
+ /*  const [userState, setUserState] = useState<MainUserInformation>() */
+ const [newUser, setNewUser] = useState(false)
   const positionAnimation = useRef(new Animated.Value(-top)).current
   const opacity = useRef(new Animated.Value(0)).current
   const formOpacity = useRef(new Animated.Value(0)).current
+  const inputOpacity = useRef(new Animated.Value(1)).current
   const {saveData} = firebase()
   const {signWithGoogle,signWithFacebook} = AuthHook()
 
@@ -65,7 +68,8 @@ export const LoginComponent = ({onHidden}:Props) => {
         duration:900,
         useNativeDriver:true
       }
-    ).start(() => loginFormAnimarion())
+    ).start(() => fadeForm())
+
     Animated.timing(
       opacity,
       {
@@ -76,7 +80,7 @@ export const LoginComponent = ({onHidden}:Props) => {
     ).start()
   }, [])
 
-  const loginFormAnimarion = () => {
+  const fadeForm = () => {
     Animated.timing(
       formOpacity,
       {
@@ -86,7 +90,22 @@ export const LoginComponent = ({onHidden}:Props) => {
       }
     ).start()
   }
-  
+
+  const inputFade = (areTheInputs:boolean,value:number) => {
+    Animated.timing(
+      inputOpacity,
+      {
+        toValue:value,
+        duration:400,
+        useNativeDriver:true
+      }
+    ).start(() => {
+      if(areTheInputs){
+        inputFade(false,1)
+        setNewUser(true)
+      }
+    })
+  }
     
   return (
     <Animated.View style={{
@@ -134,20 +153,34 @@ export const LoginComponent = ({onHidden}:Props) => {
           />
         </View>
         <View style={styles.formsLoginContent}>
-          <LoginForm />
-          <View style={styles.socialLoginContent}>
-            <SignSocialNetworksComponent 
-              imagePath={require('../assets/images/google_black_icon.png')}
-              btnColor="#D0021B"
-              authFunction={() => handleSocialLogin("google")}
-            />
+          {
+            newUser 
+            ?  (
+                <Animated.View style={{opacity:inputOpacity}}>
+                  <CreateAccountComponent />
+                </Animated.View>
+              )
+            : (
+              <Animated.View style={{opacity:inputOpacity}}>
+                <LoginForm 
+                  newUserAnimation={inputFade}
+                />
+                <View style={styles.socialLoginContent}>
+                  <SignSocialNetworksComponent 
+                    imagePath={require('../assets/images/google_black_icon.png')}
+                    btnColor="#D0021B"
+                    authFunction={() => handleSocialLogin("google")}
+                  />
 
-            <SignSocialNetworksComponent 
-              imagePath={require('../assets/images/facebook_black_logo.png')}
-              btnColor="#475993"
-              authFunction={() => handleSocialLogin("facebook")}
-            />
-          </View>
+                  <SignSocialNetworksComponent 
+                    imagePath={require('../assets/images/facebook_black_logo.png')}
+                    btnColor="#475993"
+                    authFunction={() => handleSocialLogin("facebook")}
+                  />
+                </View>
+              </Animated.View>
+            )
+          }
         </View>
       </Animated.View>
     </Animated.View>

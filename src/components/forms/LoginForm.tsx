@@ -6,7 +6,10 @@ import { Colors } from '../../theme/Colors'
 import { InputLable } from '../../utils/InputLable'
 import { Titles } from '../../utils/Titles'
 
-export const LoginForm = () => {
+interface Props{
+    newUserAnimation: (areTheInputs:boolean,value:number) => void
+}
+export const LoginForm = ({newUserAnimation}:Props) => {
     const signupSchema = Yup.object().shape({
         email: Yup.string().required('Required'),
         password: Yup.string().max(10,"too long").required('Required')
@@ -68,7 +71,7 @@ export const LoginForm = () => {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={()=> console.log("crear cuenta")}
+                        onPress={()=> newUserAnimation(true,0)}
                     >
                         <Titles 
                             text="Crear cuenta"
