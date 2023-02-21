@@ -33,7 +33,6 @@ export const InputLable = ({
     }, [focusAnim,isFocused])
     
   return (
-
     <View>
         <TextInput 
         style={{
@@ -108,6 +107,6 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         fontFamily: 'Avenir-Medium',
         fontSize: 13,
-        color:Colors.black1
+        color:Colors.black1,
     }
   })

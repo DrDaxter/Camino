@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import {Dimensions, StyleSheet, TouchableOpacity, View, Animated} from 'react-native'
+import {Dimensions, StyleSheet, TouchableOpacity, View, Animated, ScrollView} from 'react-native'
 import { AuthHook } from '../hooks/firebase/AuthHook'
 import { SignSocialNetworksComponent } from './SignSocialNetworksComponent'
 import { Titles } from '../utils/Titles'
@@ -11,6 +11,7 @@ import { LoginForm } from './forms/LoginForm'
 import { MainUserInformation } from '../interfaces/MainUserInformation'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { CreateAccountComponent } from './forms/CreateAccountComponent'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const top = Dimensions.get('screen').height*0.8
 interface Props{
@@ -108,13 +109,15 @@ export const LoginComponent = ({onHidden}:Props) => {
   }
     
   return (
-    <Animated.View style={{
-        ...styles.mainContent,
-        opacity,
-        transform: [{
-          translateY: positionAnimation
-        }]
-      }}>
+    <Animated.ScrollView style={{
+          ...styles.mainContent,
+          opacity,
+          transform: [{
+            translateY: positionAnimation
+          }]
+        }}
+        contentContainerStyle={{flexGrow:1}}
+      >
       <SimpleLoader 
         visible={showLoader}
         color={Colors.primary}
@@ -152,38 +155,41 @@ export const LoginComponent = ({onHidden}:Props) => {
             marginVertical={0}
           />
         </View>
-        <View style={styles.formsLoginContent}>
-          {
-            newUser 
-            ?  (
+        <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}
+        contentContainerStyle={{flexGrow:1}}>
+          <View style={styles.formsLoginContent}>
+            {
+              newUser 
+              ?  (
+                  <Animated.View style={{opacity:inputOpacity}}>
+                    <CreateAccountComponent />
+                  </Animated.View>
+                )
+              : (
                 <Animated.View style={{opacity:inputOpacity}}>
-                  <CreateAccountComponent />
+                  <LoginForm 
+                    newUserAnimation={inputFade}
+                  />
+                  <View style={styles.socialLoginContent}>
+                    <SignSocialNetworksComponent 
+                      imagePath={require('../assets/images/google_black_icon.png')}
+                      btnColor="#D0021B"
+                      authFunction={() => handleSocialLogin("google")}
+                    />
+
+                    <SignSocialNetworksComponent 
+                      imagePath={require('../assets/images/facebook_black_logo.png')}
+                      btnColor="#475993"
+                      authFunction={() => handleSocialLogin("facebook")}
+                    />
+                  </View>
                 </Animated.View>
               )
-            : (
-              <Animated.View style={{opacity:inputOpacity}}>
-                <LoginForm 
-                  newUserAnimation={inputFade}
-                />
-                <View style={styles.socialLoginContent}>
-                  <SignSocialNetworksComponent 
-                    imagePath={require('../assets/images/google_black_icon.png')}
-                    btnColor="#D0021B"
-                    authFunction={() => handleSocialLogin("google")}
-                  />
-
-                  <SignSocialNetworksComponent 
-                    imagePath={require('../assets/images/facebook_black_logo.png')}
-                    btnColor="#475993"
-                    authFunction={() => handleSocialLogin("facebook")}
-                  />
-                </View>
-              </Animated.View>
-            )
-          }
-        </View>
+            }
+          </View>
+        </KeyboardAwareScrollView>
       </Animated.View>
-    </Animated.View>
+    </Animated.ScrollView>
   )
 }
 
@@ -192,7 +198,7 @@ const styles = StyleSheet.create({
       flex:1,
       flexDirection:'column',
       backgroundColor:Colors.primary_dark,
-      paddingTop:5
+      paddingTop:5,
     },
     subHeaderContent:{
       width:"100%",
@@ -219,7 +225,6 @@ const styles = StyleSheet.create({
       flex:1,
       justifyContent:"center",
       backgroundColor:Colors.white2,
-      
       borderTopLeftRadius:100,
       paddingHorizontal:10,
     },
