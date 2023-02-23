@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import {Dimensions, StyleSheet, TouchableOpacity, View, Animated, ScrollView} from 'react-native'
+import {Dimensions, StyleSheet, TouchableOpacity, View, Animated, ScrollView, KeyboardAvoidingView} from 'react-native'
 import { AuthHook } from '../hooks/firebase/AuthHook'
 import { SignSocialNetworksComponent } from './SignSocialNetworksComponent'
 import { Titles } from '../utils/Titles'
@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { LoginForm } from './forms/LoginForm'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { CreateAccountComponent } from './forms/CreateAccountComponent'
+import { moderateVerticalScale } from 'react-native-size-matters';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const top = Dimensions.get('screen').height*0.8
@@ -108,86 +109,88 @@ export const LoginComponent = ({onHidden}:Props) => {
   }
     
   return (
-    <Animated.ScrollView style={{
-          ...styles.mainContent,
-          opacity,
-          transform: [{
-            translateY: positionAnimation
-          }]
-        }}
+    <Animated.ScrollView 
+      style={{
+        opacity,
+        transform: [{
+          translateY: positionAnimation
+        }]
+      }}
         contentContainerStyle={{flexGrow:1}}
-      >
-      <SimpleLoader 
-        visible={showLoader}
-        color={Colors.primary}
-      />
-      <View style={styles.subHeaderContent}>
-        <TouchableOpacity
-          onPress={() => onHidden(false)}
+    >
+        <KeyboardAvoidingView
+          style={styles.mainContent}
+          keyboardVerticalOffset={moderateVerticalScale(-40)}
         >
-          <View style={{flexDirection:"row",alignItems:"center"}}>
-            <Icon 
-              name="arrow-back-outline"
+          <SimpleLoader 
+            visible={showLoader}
+            color={Colors.primary}
+          />
+          <View style={styles.subHeaderContent}>
+            <TouchableOpacity
+              onPress={() => onHidden(false)}
+            >
+              <View style={{flexDirection:"row",alignItems:"center"}}>
+                <Icon 
+                  name="arrow-back-outline"
+                  color={Colors.white1}
+                  size={35}
+                />
+                <Titles
+                  text="Quiza Luego"
+                  color={Colors.white1}
+                  font="Roboto-Medium"
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+          <Animated.View style={{opacity:formOpacity,flex:1}}>
+          <View style={styles.headersContainer}>
+            <Titles 
+              text="Inicia Sesion"
               color={Colors.white1}
               size={35}
+              font="Roboto-Bold"
             />
-            <Titles
-              text="Quiza Luego"
+            <Titles 
+              text="Disfruta de nuestros servicios"
               color={Colors.white1}
               font="Roboto-Medium"
+              marginVertical={0}
             />
           </View>
-        </TouchableOpacity>
-      </View>
-      <Animated.View style={{opacity:formOpacity,flex:1}}>
-        <View style={styles.headersContainer}>
-          <Titles 
-            text="Inicia Sesion"
-            color={Colors.white1}
-            size={35}
-            font="Roboto-Bold"
-          />
-          <Titles 
-            text="Disfruta de nuestros servicios"
-            color={Colors.white1}
-            font="Roboto-Medium"
-            marginVertical={0}
-          />
-        </View>
-        <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}
-        contentContainerStyle={{flexGrow:1}}>
           <View style={styles.formsLoginContent}>
-            {
-              newUser 
-              ?  (
+              {
+                newUser 
+                ?  (
+                    <Animated.View style={{opacity:inputOpacity}}>
+                      <CreateAccountComponent />
+                    </Animated.View>
+                  )
+                : (
                   <Animated.View style={{opacity:inputOpacity}}>
-                    <CreateAccountComponent />
+                    <LoginForm 
+                      newUserAnimation={inputFade}
+                    />
+                    <View style={styles.socialLoginContent}>
+                      <SignSocialNetworksComponent 
+                        imagePath={require('../assets/images/google_black_icon.png')}
+                        btnColor="#D0021B"
+                        authFunction={() => handleSocialLogin("google")}
+                      />
+
+                      <SignSocialNetworksComponent 
+                        imagePath={require('../assets/images/facebook_black_logo.png')}
+                        btnColor="#475993"
+                        authFunction={() => handleSocialLogin("facebook")}
+                      />
+                    </View>
                   </Animated.View>
                 )
-              : (
-                <Animated.View style={{opacity:inputOpacity}}>
-                  <LoginForm 
-                    newUserAnimation={inputFade}
-                  />
-                  <View style={styles.socialLoginContent}>
-                    <SignSocialNetworksComponent 
-                      imagePath={require('../assets/images/google_black_icon.png')}
-                      btnColor="#D0021B"
-                      authFunction={() => handleSocialLogin("google")}
-                    />
-
-                    <SignSocialNetworksComponent 
-                      imagePath={require('../assets/images/facebook_black_logo.png')}
-                      btnColor="#475993"
-                      authFunction={() => handleSocialLogin("facebook")}
-                    />
-                  </View>
-                </Animated.View>
-              )
-            }
-          </View>
-        </KeyboardAwareScrollView>
-      </Animated.View>
+              }
+            </View>
+          </Animated.View>
+        </KeyboardAvoidingView>
     </Animated.ScrollView>
   )
 }
