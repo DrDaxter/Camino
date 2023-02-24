@@ -10,8 +10,8 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { LoginForm } from './forms/LoginForm'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { CreateAccountComponent } from './forms/CreateAccountComponent'
-import { moderateVerticalScale } from 'react-native-size-matters';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { moderateVerticalScale } from 'react-native-size-matters'
 
 const top = Dimensions.get('screen').height*0.8
 interface Props{
@@ -109,42 +109,39 @@ export const LoginComponent = ({onHidden}:Props) => {
   }
     
   return (
-    <Animated.ScrollView 
-      style={{
-        opacity,
-        transform: [{
-          translateY: positionAnimation
-        }]
-      }}
-        contentContainerStyle={{flexGrow:1}}
+    <Animated.ScrollView style={{
+      ...styles.mainContent,
+      opacity,
+      transform: [{
+        translateY: positionAnimation
+      }]
+    }}
+    contentContainerStyle={{flexGrow:1}}
+    keyboardShouldPersistTaps="handled"
+    bounces={false}
     >
-        <KeyboardAvoidingView
-          style={styles.mainContent}
-          keyboardVerticalOffset={moderateVerticalScale(-40)}
-        >
-          <SimpleLoader 
-            visible={showLoader}
-            color={Colors.primary}
-          />
-          <View style={styles.subHeaderContent}>
-            <TouchableOpacity
-              onPress={() => onHidden(false)}
-            >
-              <View style={{flexDirection:"row",alignItems:"center"}}>
-                <Icon 
-                  name="arrow-back-outline"
-                  color={Colors.white1}
-                  size={35}
-                />
-                <Titles
-                  text="Quiza Luego"
-                  color={Colors.white1}
-                  font="Roboto-Medium"
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <Animated.View style={{opacity:formOpacity,flex:1}}>
+      <KeyboardAvoidingView style={{ flex: 1}} behavior="padding" enabled 
+        keyboardVerticalOffset={moderateVerticalScale(-40)}>
+        <View style={styles.subHeaderContent}>
+          <TouchableOpacity
+            onPress={() => onHidden(false)}>
+            <View style={{flexDirection:"row",alignItems:"center"}}>
+              <Icon 
+                name="arrow-back-outline"
+                color={Colors.white1}
+                size={35}
+              />
+              <Titles
+                text="Quiza Luego"
+                color={Colors.white1}
+                font="Roboto-Medium"
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <Animated.View
+          style={{opacity:formOpacity,flex:1}}
+          >
           <View style={styles.headersContainer}>
             <Titles 
               text="Inicia Sesion"
@@ -160,14 +157,14 @@ export const LoginComponent = ({onHidden}:Props) => {
             />
           </View>
           <View style={styles.formsLoginContent}>
-              {
-                newUser 
-                ?  (
-                    <Animated.View style={{opacity:inputOpacity}}>
-                      <CreateAccountComponent />
-                    </Animated.View>
-                  )
-                : (
+            {
+              newUser 
+              ?  (
+                  <Animated.View style={{opacity:inputOpacity}}>
+                    <CreateAccountComponent />
+                  </Animated.View>
+                )
+              : (
                   <Animated.View style={{opacity:inputOpacity}}>
                     <LoginForm 
                       newUserAnimation={inputFade}
@@ -186,11 +183,11 @@ export const LoginComponent = ({onHidden}:Props) => {
                       />
                     </View>
                   </Animated.View>
-                )
-              }
-            </View>
-          </Animated.View>
-        </KeyboardAvoidingView>
+              )
+            }
+          </View>
+        </Animated.View>
+      </KeyboardAvoidingView> 
     </Animated.ScrollView>
   )
 }
