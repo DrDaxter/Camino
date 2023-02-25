@@ -7,13 +7,17 @@ interface Props {
     value:string,
     onValueChange: (value: string) => void
     onBlurChange: (e: FocusEvent) => void
+    resizeFormContentsIn?: () => void
+    resizeFormContentsOut?: () => void
 }
 
 export const InputLable = ({
    label,
    value,
    onValueChange,
-   onBlurChange
+   onBlurChange,
+   resizeFormContentsIn = ()=>{},
+   resizeFormContentsOut = ()=>{}
 }:Props) => {
 
     const [isFocused, setIsFocused] = useState(false)
@@ -35,16 +39,18 @@ export const InputLable = ({
   return (
     <View>
         <TextInput 
-        style={{
-            ...styles.input,
-            borderColor: isFocused ? Colors.black1 : Colors.gray2
-        }}
-        onChangeText={onValueChange}
+            style={{
+                ...styles.input,
+                borderColor: isFocused ? Colors.black1 : Colors.gray2
+            }}
+            onChangeText={onValueChange}
             onFocus={() => setIsFocused(true)}
             onBlur={(e) => {
+                resizeFormContentsOut()
                 onBlurChange?.(e)
                 setIsFocused(false)
             }}
+            onPressIn={resizeFormContentsIn}
             value={value}
             ref={inputRef}
         />

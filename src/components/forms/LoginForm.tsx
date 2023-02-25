@@ -8,8 +8,14 @@ import { Titles } from '../../utils/Titles'
 
 interface Props{
     newUserAnimation: (areTheInputs:boolean,value:number) => void
+    resizeFormContentsIn?: () => void
+    resizeFormContentsOut?: () => void
 }
-export const LoginForm = ({newUserAnimation}:Props) => {
+export const LoginForm = ({
+    newUserAnimation,
+    resizeFormContentsIn = ()=>{},
+    resizeFormContentsOut = () => {}
+}:Props) => {
     const signupSchema = Yup.object().shape({
         email: Yup.string().required('Required'),
         password: Yup.string().max(10,"too long").required('Required')
@@ -40,6 +46,8 @@ export const LoginForm = ({newUserAnimation}:Props) => {
                         onValueChange={handleChange('email')}
                         onBlurChange={handleBlur('email')}
                         value={values.email}
+                        resizeFormContentsIn={resizeFormContentsIn}
+                        resizeFormContentsOut={resizeFormContentsOut}
                     />
                     {errors.email && touched.email && <Text style={{color:"red"}}>{errors.email}</Text>}
                 </View>

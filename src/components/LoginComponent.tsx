@@ -1,5 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
-import {Dimensions, StyleSheet, TouchableOpacity, View, Animated, ScrollView, KeyboardAvoidingView} from 'react-native'
+import 
+{
+  Dimensions, 
+  StyleSheet, 
+  TouchableOpacity, 
+  View, 
+  Animated as ReactAnimated, 
+  KeyboardAvoidingView
+} from 'react-native'
+import Animated from 'react-native-reanimated'
 import { AuthHook } from '../hooks/firebase/AuthHook'
 import { SignSocialNetworksComponent } from './SignSocialNetworksComponent'
 import { Titles } from '../utils/Titles'
@@ -10,8 +19,8 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { LoginForm } from './forms/LoginForm'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { CreateAccountComponent } from './forms/CreateAccountComponent'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { moderateVerticalScale } from 'react-native-size-matters'
+import { AnimationsHook } from '../hooks/AnimationsHook'
 
 const top = Dimensions.get('screen').height*0.8
 interface Props{
@@ -19,14 +28,14 @@ interface Props{
 }
 export const LoginComponent = ({onHidden}:Props) => {
   const [showLoader, setShowLoader] = useState(false)
- /*  const [userState, setUserState] = useState<MainUserInformation>() */
- const [newUser, setNewUser] = useState(false)
-  const positionAnimation = useRef(new Animated.Value(-top)).current
-  const opacity = useRef(new Animated.Value(0)).current
-  const formOpacity = useRef(new Animated.Value(0)).current
-  const inputOpacity = useRef(new Animated.Value(1)).current
+  const [newUser, setNewUser] = useState(false)
+  const positionAnimation = useRef(new ReactAnimated.Value(-top)).current
+  const opacity = useRef(new ReactAnimated.Value(0)).current
+  const formOpacity = useRef(new ReactAnimated.Value(0)).current
+  const inputOpacity = useRef(new ReactAnimated.Value(1)).current
   const {saveData} = firebase()
   const {signWithGoogle,signWithFacebook} = AuthHook()
+  const {animationStyle,formContentResizeAnimation} = AnimationsHook()
 
   const handleSocialLogin = async(social:string) => {
     setShowLoader(true)
@@ -62,7 +71,7 @@ export const LoginComponent = ({onHidden}:Props) => {
   }
 
   useEffect(() => {
-    Animated.timing(
+    ReactAnimated.timing(
       positionAnimation,
       {
         toValue:0,
@@ -71,7 +80,7 @@ export const LoginComponent = ({onHidden}:Props) => {
       }
     ).start(() => fadeForm())
 
-    Animated.timing(
+    ReactAnimated.timing(
       opacity,
       {
         toValue:1,
@@ -82,7 +91,7 @@ export const LoginComponent = ({onHidden}:Props) => {
   }, [])
 
   const fadeForm = () => {
-    Animated.timing(
+    ReactAnimated.timing(
       formOpacity,
       {
         toValue:1,
@@ -93,7 +102,7 @@ export const LoginComponent = ({onHidden}:Props) => {
   }
 
   const inputFade = (areTheInputs:boolean,value:number) => {
-    Animated.timing(
+    ReactAnimated.timing(
       inputOpacity,
       {
         toValue:value,
@@ -109,19 +118,19 @@ export const LoginComponent = ({onHidden}:Props) => {
   }
     
   return (
-    <Animated.ScrollView style={{
-      ...styles.mainContent,
-      opacity,
-      transform: [{
-        translateY: positionAnimation
-      }]
-    }}
-    contentContainerStyle={{flexGrow:1}}
-    keyboardShouldPersistTaps="handled"
-    bounces={false}
+    <ReactAnimated.ScrollView style={{
+        ...styles.mainContent,
+        opacity,
+        transform: [{
+          translateY: positionAnimation
+        }]
+      }}
+      contentContainerStyle={{flexGrow:1}}
+      keyboardShouldPersistTaps="handled" 
+      bounces={false}
     >
-      <KeyboardAvoidingView style={{ flex: 1}} behavior="padding" enabled 
-        keyboardVerticalOffset={moderateVerticalScale(-40)}>
+      <KeyboardAvoidingView style={{ flex: 1}} behavior="height" enabled 
+        keyboardVerticalOffset={moderateVerticalScale(-45)}>
         <View style={styles.subHeaderContent}>
           <TouchableOpacity
             onPress={() => onHidden(false)}>
@@ -139,10 +148,9 @@ export const LoginComponent = ({onHidden}:Props) => {
             </View>
           </TouchableOpacity>
         </View>
-        <Animated.View
-          style={{opacity:formOpacity,flex:1}}
-          >
-          <View style={styles.headersContainer}>
+        <ReactAnimated.View style={{opacity:formOpacity,flex:1}}>
+
+          <Animated.View style={[styles.headersContainer,animationStyle]}>
             <Titles 
               text="Inicia Sesion"
               color={Colors.white1}
@@ -155,19 +163,21 @@ export const LoginComponent = ({onHidden}:Props) => {
               font="Roboto-Medium"
               marginVertical={0}
             />
-          </View>
+          </Animated.View>
           <View style={styles.formsLoginContent}>
             {
               newUser 
               ?  (
-                  <Animated.View style={{opacity:inputOpacity}}>
+                  <ReactAnimated.View style={{opacity:inputOpacity}}>
                     <CreateAccountComponent />
-                  </Animated.View>
+                  </ReactAnimated.View>
                 )
               : (
-                  <Animated.View style={{opacity:inputOpacity}}>
+                  <ReactAnimated.View style={{opacity:inputOpacity}}>
                     <LoginForm 
                       newUserAnimation={inputFade}
+                      resizeFormContentsIn={() => formContentResizeAnimation(0)}
+                      resizeFormContentsOut={() => formContentResizeAnimation(200)}
                     />
                     <View style={styles.socialLoginContent}>
                       <SignSocialNetworksComponent 
@@ -182,13 +192,13 @@ export const LoginComponent = ({onHidden}:Props) => {
                         authFunction={() => handleSocialLogin("facebook")}
                       />
                     </View>
-                  </Animated.View>
+                  </ReactAnimated.View>
               )
             }
           </View>
-        </Animated.View>
+        </ReactAnimated.View>
       </KeyboardAvoidingView> 
-    </Animated.ScrollView>
+    </ReactAnimated.ScrollView>
   )
 }
 
@@ -211,7 +221,6 @@ const styles = StyleSheet.create({
     headersContainer:{
       alignItems:'flex-start',
       justifyContent:'center',
-      height:'30%',
       paddingHorizontal:15,
     },
     loginSubtitle:{
